@@ -19,7 +19,7 @@ const Sidebar = () => {
             title: "Dashboard",
             links: [{
                 text: "Home", href: "dashboard", icon: FaTachometerAlt,
-                text: "Sections", href: "section.index", icon: FaHospital
+                text: "Clinics", href: "clinic.index", icon: FaHospital
             }],
             icon: FaTachometerAlt,
         },
@@ -32,7 +32,7 @@ const Sidebar = () => {
         },
         {
             title: "Doctors",
-            links: [{ text: "All Doctors", href: "dashboard", icon: FaUserMd }],
+            links: [{ text: "All Doctors", href: "doctor.index", icon: FaUserMd }],
             icon: FaUserMd,
         },
         {

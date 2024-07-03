@@ -6,7 +6,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({ auth, sections, queryParams = null, success }) {
+export default function Index({ auth, clinics, queryParams = null, success }) {
     queryParams = queryParams || {};
 
     const searchFieldChanged = (name, value) => {
@@ -19,7 +19,7 @@ export default function Index({ auth, sections, queryParams = null, success }) {
             delete queryParams.page;
         }
 
-        router.get(route("section.index"), queryParams);
+        router.get(route("clinic.index"), queryParams);
     };
 
     const onKeyPress = (name, event) => {
@@ -39,15 +39,15 @@ export default function Index({ auth, sections, queryParams = null, success }) {
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("section.index"), queryParams);
+        router.get(route("clinic.index"), queryParams);
     };
 
-    const deletesection = (section) => {
-        if (!window.confirm("Are you sure you want to delete the sections?")) {
+    const deleteclinic = (clinic) => {
+        if (!window.confirm("Are you sure you want to delete the clinics?")) {
             return;
         }
 
-        router.delete(route("section.destroy", section.id));
+        router.delete(route("clinic.destroy", clinic.id));
     };
     return (
         <AuthenticatedLayout
@@ -55,10 +55,10 @@ export default function Index({ auth, sections, queryParams = null, success }) {
             header={
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        sections
+                        clinics
                     </h2>
                     <Link
-                        href={route("section.create")}
+                        href={route("clinic.create")}
                         className="px-3 py-1 text-white transition-all rounded shadow bg-emerald-500 hover:bg-emerald-600"
                     >
                         Add new
@@ -66,7 +66,7 @@ export default function Index({ auth, sections, queryParams = null, success }) {
                 </div>
             }
         >
-            <Head title="sections" />
+            <Head title="clinics" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -138,7 +138,7 @@ export default function Index({ auth, sections, queryParams = null, success }) {
                                             <th className="px-3 py-3">
                                                 <TextInput
                                                     className="w-full min-w-[150px]"
-                                                    placeholder="section Name"
+                                                    placeholder="clinic Name"
                                                     onSubmit={(e) =>
                                                         searchFieldChanged(
                                                             "name",
@@ -157,32 +157,32 @@ export default function Index({ auth, sections, queryParams = null, success }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {sections.data.map((section) => (
+                                        {clinics.data.map((clinic) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={section.id}
+                                                key={clinic.id}
                                             >
                                                 <td className="px-3 py-2">
-                                                    {section.id}
+                                                    {clinic.id}
                                                 </td>
                                                 <td className="px-3 py-2">
-                                                    {section.name}
+                                                    {clinic.name}
                                                 </td>
 
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {section.description}
+                                                    {clinic.description}
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {section.created_at}
+                                                    {clinic.created_at}
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {section.updated_at}
+                                                    {clinic.updated_at}
                                                 </td>
                                                 <td className="px-3 py-2 text-center text-nowrap">
                                                     <Link
                                                         href={route(
-                                                            "section.edit",
-                                                            section.id
+                                                            "clinic.edit",
+                                                            clinic.id
                                                         )}
                                                         className="mx-1 font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                                     >
@@ -190,8 +190,8 @@ export default function Index({ auth, sections, queryParams = null, success }) {
                                                     </Link>
                                                     <button
                                                         onClick={(e) =>
-                                                            deletesection(
-                                                                section
+                                                            deleteclinic(
+                                                                clinic
                                                             )
                                                         }
                                                         className="mx-1 font-medium text-red-600 dark:text-red-500 hover:underline"
@@ -205,7 +205,7 @@ export default function Index({ auth, sections, queryParams = null, success }) {
                                 </table>
                             </div>
 
-                            <Pagination links={sections.meta.links} />
+                            <Pagination links={clinics.meta.links} />
                         </div>
                     </div>
                 </div>

@@ -6,17 +6,16 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Create({ auth, section }) {
+export default function Create({ auth }) {
     const { data, setData, post, errors } = useForm({
-        name: section.name || "",
-        description: section.description || "",
-        _method: "PUT",
+        name: "",
+        description: "",
     });
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        post(route("section.update", section.id));
+        post(route("clinic.store"));
     };
 
     return (
@@ -25,34 +24,33 @@ export default function Create({ auth, section }) {
             header={
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        Edit section " {section.name} "
+                        Create new Clinic
                     </h2>
                 </div>
             }
         >
-            <Head title="section" />
+            <Head title="clinics" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                        {JSON.stringify(section)}
                         <form
                             onSubmit={onSubmit}
                             className="p-4 bg-white shadow sm:p-8 dark:bg-gray-800 sm:rounded-lg"
                         >
                             <div className="flex items-center justify-center text-xl font-medium text-gray-700 dark:text-gray-300">
                                 <hr className="flex-1 my-6 border-gray-300 dark:border-gray-700" />
-                                <span className="m-4">section Info</span>
+                                <span className="m-4">Clinic Info</span>
                                 <hr className="flex-1 -my-6 border-gray-300 dark:border-gray-700" />
                             </div>
                             <div className="mt-4">
                                 <InputLabel
-                                    htmlFor="section_name"
-                                    value="section Name"
+                                    htmlFor="clinic_name"
+                                    value="Clinic Name"
                                 />
 
                                 <TextInput
-                                    id="section_name"
+                                    id="clinic_name"
                                     type="text"
                                     name="name"
                                     value={data.name}
@@ -68,14 +66,15 @@ export default function Create({ auth, section }) {
                                     className="mt-2"
                                 />
                             </div>
+
                             <div className="mt-4">
                                 <InputLabel
-                                    htmlFor="section_description"
-                                    value="Section Description"
+                                    htmlFor="clinic_description"
+                                    value="Clinic Description"
                                 />
 
                                 <TextAreaInput
-                                    id="section_description"
+                                    id="clinic_description"
                                     name="description"
                                     value={data.description}
                                     className="block w-full mt-1"
@@ -89,9 +88,10 @@ export default function Create({ auth, section }) {
                                     className="mt-2"
                                 />
                             </div>
+
                             <div className="mt-4 text-right">
                                 <Link
-                                    href={route("section.index")}
+                                    href={route("clinic.index")}
                                     className="px-3 py-1 mr-2 text-gray-800 transition-all bg-gray-100 rounded shadow hover:bg-gray-200"
                                 >
                                     Cancel

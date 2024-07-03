@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SectionController;
+use App\Http\Controllers\ClinicController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,7 +22,9 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::resource('section',SectionController::class);
+
+    Route::resource('clinic',ClinicController::class);
+    Route::resource('doctor',DoctorController::class);
 });
 
 
