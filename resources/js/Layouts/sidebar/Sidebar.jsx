@@ -24,16 +24,16 @@ const Sidebar = () => {
             icon: FaTachometerAlt,
         },
         {
+            title: "Doctors",
+            links: [{ text: "All Doctors", href: "doctor.index", icon: FaUserMd }],
+            icon: FaUserMd,
+        },
+        {
             title: "Patients",
             links: [
                 { text: "Patients", href: "dashboard", icon: FaUserInjured },
             ],
             icon: FaUserInjured,
-        },
-        {
-            title: "Doctors",
-            links: [{ text: "All Doctors", href: "doctor.index", icon: FaUserMd }],
-            icon: FaUserMd,
         },
         {
             title: "Appointments",

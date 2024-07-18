@@ -23,7 +23,7 @@ class DoctorController extends Controller
     public function index()
     {
     $query = Doctor::query()
-        ->select('id', 'updated_at','user_id','specialization_id')
+        ->select('id', 'updated_at','user_id','specialization_id','status')
         ->with(['user' => function($q) {$q->select('id', 'name', 'email');}, 'specialization']);
 
         $sortFileds = request('sort_field','id');

@@ -74,7 +74,7 @@ export default function Index({ auth, doctors, queryParams = null, success }) {
             <Head title="Doctors" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto sm:px-6 lg:px-8">
                     {success && (
                         <div className="px-4 py-2 mb-4 text-white rounded bg-emerald-500">
                             {success}
@@ -99,9 +99,14 @@ export default function Index({ auth, doctors, queryParams = null, success }) {
                                                 ID
                                             </TableHeading>
 
-                                            <td>Name</td>
-                                            <td>Email</td>
-                                            <td>Specialization</td>
+                                            <td className="px-3 py-3">Name</td>
+                                            <td className="px-3 py-3">Email</td>
+                                            <td className="px-3 py-3 ">
+                                                Specialization
+                                            </td>
+                                            <td className="py-4 text-center">
+                                                Status
+                                            </td>
 
                                             <TableHeading
                                                 name="updated_at"
@@ -156,7 +161,8 @@ export default function Index({ auth, doctors, queryParams = null, success }) {
                                             </th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3 text-center text-nowrap"></th>
+                                            <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3 "></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -176,6 +182,22 @@ export default function Index({ auth, doctors, queryParams = null, success }) {
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {doctor.specialization}
+                                                </td>
+                                                <td className="px-3 py-2 text-center">
+                                                    <span
+                                                        className={
+                                                            "px-2 py-1 text-nowrap text-white rounded " +
+                                                            DOCTOR_STATUS_CLASS_MAP[
+                                                                doctor.status
+                                                            ]
+                                                        }
+                                                    >
+                                                        {
+                                                            DOCTOR_STATUS_TEXT_MAP[
+                                                                doctor.status
+                                                            ]
+                                                        }
+                                                    </span>
                                                 </td>
 
                                                 <td className="px-3 py-2 text-nowrap">
