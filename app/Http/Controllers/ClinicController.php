@@ -75,7 +75,11 @@ class ClinicController extends Controller
      */
     public function update(UpdateClinicRequest $request, Clinic $clinic)
     {
-        //
+        $data = $request->validated();
+        $clinic->update($data);
+        return to_route('clinic.index')
+        ->with('success',"Clinic updated successfully");
+
     }
 
     /**

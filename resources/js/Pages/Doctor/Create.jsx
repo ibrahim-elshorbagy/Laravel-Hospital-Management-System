@@ -170,7 +170,7 @@ export default function Create({ auth, specializations, clinics }) {
                                 <div className="mt-4">
                                     <InputLabel
                                         htmlFor="doctor_status"
-                                        value="Classroom Status"
+                                        value="Doctor Status"
                                     />
 
                                     <SelectInput
@@ -182,8 +182,8 @@ export default function Create({ auth, specializations, clinics }) {
                                         }
                                     >
                                         <option value="">Select Status</option>
-                                        <option value="active">active</option>
-                                        <option value="inactive">
+                                        <option value='1'>active</option>
+                                        <option value="0">
                                             inactive
                                         </option>
                                         <option value="retired">retired</option>
