@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Package extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function packages()
+    public function services()
     {
-        return $this->belongsToMany(Package::class, 'package_service');
+        return $this->belongsToMany(Service::class, 'package_service');
     }
 }
-

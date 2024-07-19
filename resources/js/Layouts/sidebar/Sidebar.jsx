@@ -11,7 +11,7 @@ import {
     FaXRay,
     FaCog,
     FaHospital,
-
+    FaHandHoldingMedical,
 } from "react-icons/fa";
 
 import { MdMedicalServices } from "react-icons/md";
@@ -25,6 +25,8 @@ const Sidebar = () => {
                     text: "Home",
                     href: "dashboard",
                     icon: FaTachometerAlt,
+                },
+                {
                     text: "Clinics",
                     href: "clinic.index",
                     icon: FaHospital,
@@ -39,17 +41,29 @@ const Sidebar = () => {
             ],
             icon: FaUserMd,
         },
+
+        {
+            title: "Services",
+            links: [
+                {
+                    text: "Services",
+                    href: "service.index",
+                    icon: FaHandHoldingMedical,
+                },
+                {
+                    text: "Packages",
+                    href: "package.index",
+                    icon: MdMedicalServices,
+                },
+            ],
+            icon: FaHandHoldingMedical,
+        },
         {
             title: "Patients",
             links: [
                 { text: "Patients", href: "dashboard", icon: FaUserInjured },
             ],
             icon: FaUserInjured,
-        },
-        {
-            title: "Services",
-            links: [{ text: "Services", href: "service.index", icon: MdMedicalServices }],
-            icon: MdMedicalServices,
         },
         {
             title: "Appointments",

@@ -9,7 +9,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({ auth, services, queryParams = null, success }) {
+export default function Index({ auth, apackages, queryParams = null, success }) {
     queryParams = queryParams || {};
 
     const searchFieldChanged = (name, value) => {
@@ -22,7 +22,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
             delete queryParams.page;
         }
 
-        router.get(route("service.index"), queryParams);
+        router.get(route("package.index"), queryParams);
     };
 
     const onKeyPress = (name, event) => {
@@ -42,15 +42,15 @@ export default function Index({ auth, services, queryParams = null, success }) {
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("service.index"), queryParams);
+        router.get(route("package.index"), queryParams);
     };
 
-    const deleteclinic = (service) => {
-        if (!window.confirm("Are you sure you want to delete the services?")) {
+    const deletePackage = (apackage) => {
+        if (!window.confirm("Are you sure you want to delete the apackages?")) {
             return;
         }
 
-        router.delete(route("service.destroy", service.id));
+        router.delete(route("package.destroy", apackage.id));
     };
     return (
         <AuthenticatedLayout
@@ -58,10 +58,10 @@ export default function Index({ auth, services, queryParams = null, success }) {
             header={
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        services
+                        Packages
                     </h2>
                     <Link
-                        href={route("service.create")}
+                        href={route("package.create")}
                         className="px-3 py-1 text-white transition-all rounded shadow bg-emerald-500 hover:bg-emerald-600"
                     >
                         Add new
@@ -69,7 +69,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
                 </div>
             }
         >
-            <Head title="services" />
+            <Head title="Packages" />
 
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8">
@@ -114,9 +114,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
                                             <th className="px-3 py-3 min-w-[200px]">
                                                 description
                                             </th>
-                                            <th className="px-3 py-3">
-                                                Price
-                                            </th>
+
                                             <th className="px-3 py-3 text-center">
                                                 Status
                                             </th>
@@ -146,7 +144,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
                                             <th className="px-3 py-3">
                                                 <TextInput
                                                     className="w-full min-w-[150px]"
-                                                    placeholder="Service Name"
+                                                    placeholder="Package Name"
                                                     onSubmit={(e) =>
                                                         searchFieldChanged(
                                                             "name",
@@ -162,56 +160,52 @@ export default function Index({ auth, services, queryParams = null, success }) {
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3 text-right"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {services.data.map((service) => (
+                                        {apackages.data.map((apackage) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={service.id}
+                                                key={apackage.id}
                                             >
                                                 <td className="px-3 py-2">
-                                                    {service.id}
+                                                    {apackage.id}
                                                 </td>
                                                 <td className="px-3 py-2">
-                                                    {service.name}
+                                                    {apackage.name}
                                                 </td>
 
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {service.description}
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {service.price}
+                                                    {apackage.description}
                                                 </td>
                                                 <td className="px-3 py-2 text-center">
                                                     <span
                                                         className={
                                                             "px-2 py-1 text-nowrap text-white rounded " +
                                                             DOCTOR_STATUS_CLASS_MAP[
-                                                                service.status
+                                                                apackage.status
                                                             ]
                                                         }
                                                     >
                                                         {
                                                             DOCTOR_STATUS_TEXT_MAP[
-                                                                service.status
+                                                                apackage.status
                                                             ]
                                                         }
                                                     </span>
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {service.created_at}
+                                                    {apackage.created_at}
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {service.updated_at}
+                                                    {apackage.updated_at}
                                                 </td>
                                                 <td className="px-3 py-2 text-center text-nowrap">
                                                     <Link
                                                         href={route(
-                                                            "service.edit",
-                                                            service.id
+                                                            "package.edit",
+                                                            apackage.id
                                                         )}
                                                         className="mx-1 font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                                     >
@@ -219,8 +213,8 @@ export default function Index({ auth, services, queryParams = null, success }) {
                                                     </Link>
                                                     <button
                                                         onClick={(e) =>
-                                                            deleteclinic(
-                                                                service
+                                                            deletePackage(
+                                                                apackage
                                                             )
                                                         }
                                                         className="mx-1 font-medium text-red-600 dark:text-red-500 hover:underline"
@@ -234,7 +228,7 @@ export default function Index({ auth, services, queryParams = null, success }) {
                                 </table>
                             </div>
 
-                            <Pagination links={services.meta.links} />
+                            <Pagination links={apackages.meta.links} />
                         </div>
                     </div>
                 </div>

@@ -69,7 +69,7 @@ export default function Index({ auth, clinics, queryParams = null, success }) {
             <Head title="clinics" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto sm:px-6 lg:px-8">
                     {success && (
                         <div className="px-4 py-2 mb-4 text-white rounded bg-emerald-500">
                             {success}
