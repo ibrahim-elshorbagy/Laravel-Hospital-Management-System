@@ -1,20 +1,16 @@
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import TableHeading from "@/Components/TableHeading";
+
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, router } from "@inertiajs/react";
+
 import {
     DOCTOR_STATUS_CLASS_MAP,
     DOCTOR_STATUS_TEXT_MAP,
 } from "@/constants.jsx";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-import { Head, Link, router } from "@inertiajs/react";
-
-export default function Index({
-    auth,
-    apackages,
-    queryParams = null,
-    success,
-}) {
+export default function Index({ auth, patients, queryParams = null, success }) {
     queryParams = queryParams || {};
 
     const searchFieldChanged = (name, value) => {
@@ -27,7 +23,7 @@ export default function Index({
             delete queryParams.page;
         }
 
-        router.get(route("package.index"), queryParams);
+        router.get(route("patient.index"), queryParams);
     };
 
     const onKeyPress = (name, event) => {
@@ -47,26 +43,27 @@ export default function Index({
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("package.index"), queryParams);
+        router.get(route("patient.index"), queryParams);
     };
 
-    const deletePackage = (apackage) => {
-        if (!window.confirm("Are you sure you want to delete the apackages?")) {
+    const deletepatient = (patient) => {
+        if (!window.confirm("Are you sure you want to delete the patient?")) {
             return;
         }
 
-        router.delete(route("package.destroy", apackage.id));
+        router.delete(route("patient.destroy", patient.id));
     };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        Packages
+                        Patients
                     </h2>
                     <Link
-                        href={route("package.create")}
+                        href={route("patient.create")}
                         className="px-3 py-1 text-white transition-all rounded shadow bg-emerald-500 hover:bg-emerald-600"
                     >
                         Add new
@@ -74,7 +71,7 @@ export default function Index({
                 </div>
             }
         >
-            <Head title="Packages" />
+            <Head title="Patients" />
 
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8">
@@ -83,7 +80,6 @@ export default function Index({
                             {success}
                         </div>
                     )}
-
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="overflow-auto">
@@ -103,8 +99,17 @@ export default function Index({
                                                 ID
                                             </TableHeading>
 
+                                            <td className="px-3 py-3">Name</td>
+                                            <td className="px-3 py-3">Email</td>
+                                            <td className="px-3 py-3 ">
+                                                Address
+                                            </td>
+                                            <td className="py-4 text-center">
+                                                Phome
+                                            </td>
+
                                             <TableHeading
-                                                name="name"
+                                                name="updated_at"
                                                 sort_field={
                                                     queryParams.sort_field
                                                 }
@@ -113,43 +118,7 @@ export default function Index({
                                                 }
                                                 sortChanged={sortChanged}
                                             >
-                                                Name
-                                            </TableHeading>
-
-                                            <th className="px-3 py-3 min-w-[200px]">
-                                                Description
-                                            </th>
-
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total Before Discount
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Discount Value
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total After Discount
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Tax Rate
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total With Tax
-                                            </th>
-
-                                            <th className="px-3 py-3 text-center">
-                                                Status
-                                            </th>
-                                            <TableHeading
-                                                name="created_at"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
-                                                sortChanged={sortChanged}
-                                            >
-                                                Create Date
+                                                Updated At
                                             </TableHeading>
 
                                             <th className="px-3 py-3 text-center">
@@ -162,8 +131,8 @@ export default function Index({
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3">
                                                 <TextInput
-                                                    className="w-full min-w-[150px]"
-                                                    placeholder="Package Name"
+                                                    className="w-full min-w-[350px]"
+                                                    placeholder="Patient Name"
                                                     onSubmit={(e) =>
                                                         searchFieldChanged(
                                                             "name",
@@ -175,77 +144,57 @@ export default function Index({
                                                     }
                                                 ></TextInput>
                                             </th>
+                                            <th className="px-3 py-3">
+                                                <TextInput
+                                                    className="w-full min-w-[350px]"
+                                                    placeholder="Patient Email"
+                                                    onSubmit={(e) =>
+                                                        searchFieldChanged(
+                                                            "email",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    onKeyPress={(e) =>
+                                                        onKeyPress("email", e)
+                                                    }
+                                                ></TextInput>
+                                            </th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3 text-right"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {apackages.data.map((apackage) => (
+                                        {patients.data.map((patient) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={apackage.id}
+                                                key={patient.id}
                                             >
                                                 <td className="px-3 py-2">
-                                                    {apackage.id}
+                                                    {patient.id}
                                                 </td>
                                                 <td className="px-3 py-2">
-                                                    {apackage.name}
+                                                    {patient.name}
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    {patient.email}
+                                                </td>
+                                                <td className="px-3 py-2 text-nowrap">
+                                                    {patient.address}
+                                                </td>
+                                                <td className="px-3 py-2 text-nowrap">
+                                                    {patient.phone}
                                                 </td>
 
                                                 <td className="px-3 py-2 text-nowrap">
-                                                    {apackage.description}
+                                                    {patient.updated_at}
                                                 </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {
-                                                        apackage.Total_before_discount
-                                                    }
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {apackage.discount_value}
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {
-                                                        apackage.Total_after_discount
-                                                    }
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {apackage.tax_rate}
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {apackage.Total_with_tax}
-                                                </td>
-                                                <td className="px-3 py-2 text-center">
-                                                    <span
-                                                        className={
-                                                            "px-2 py-1 text-nowrap text-white rounded " +
-                                                            DOCTOR_STATUS_CLASS_MAP[
-                                                                apackage.status
-                                                            ]
-                                                        }
-                                                    >
-                                                        {
-                                                            DOCTOR_STATUS_TEXT_MAP[
-                                                                apackage.status
-                                                            ]
-                                                        }
-                                                    </span>
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {apackage.created_at}
-                                                </td>
-
                                                 <td className="px-3 py-2 text-center text-nowrap">
                                                     <Link
                                                         href={route(
-                                                            "package.edit",
-                                                            apackage.id
+                                                            "patient.edit",
+                                                            patient.id
                                                         )}
                                                         className="mx-1 font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                                     >
@@ -253,8 +202,8 @@ export default function Index({
                                                     </Link>
                                                     <button
                                                         onClick={(e) =>
-                                                            deletePackage(
-                                                                apackage
+                                                            deletepatient(
+                                                                patient
                                                             )
                                                         }
                                                         className="mx-1 font-medium text-red-600 dark:text-red-500 hover:underline"
@@ -268,7 +217,7 @@ export default function Index({
                                 </table>
                             </div>
 
-                            <Pagination links={apackages.meta.links} />
+                            <Pagination links={patients.meta.links} />
                         </div>
                     </div>
                 </div>

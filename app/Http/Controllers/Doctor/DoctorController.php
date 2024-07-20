@@ -86,6 +86,7 @@ class DoctorController extends Controller
             'status' => $data['status'],
         ];
         $doctor = Doctor::create($doctorData);
+        $user->assignRole('doctor');
 
         if (isset($data['days'])) {
         foreach ($data['days'] as $day) {

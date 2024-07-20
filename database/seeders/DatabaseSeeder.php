@@ -15,14 +15,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->create([
+
+        // $this->call(SpecializationsSeeder::class);
+        // $this->call(ClinicSeeder::class);
+        // $this->call(ServiceSeeder::class);
+        // $this->call(RolesAndPermissionsSeeder::class);
+
+        $user = User::factory()->create([
             'name' => 'ibrahim',
             'email' => 'a@a.a',
             'password' =>Hash::make('a'),
         ]);
-
-        $this->call(SpecializationsSeeder::class);
-        $this->call(ClinicSeeder::class);
-        $this->call(ServiceSeeder::class);
+        $user->assignRole('admin');
     }
 }

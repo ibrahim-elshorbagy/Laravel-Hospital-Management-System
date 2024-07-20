@@ -60,9 +60,7 @@ const Sidebar = () => {
         },
         {
             title: "Patients",
-            links: [
-                { text: "Patients", href: "dashboard", icon: FaUserInjured },
-            ],
+            links: [{ text: "Patients", href: "patient.index", icon: FaUserInjured }],
             icon: FaUserInjured,
         },
         {
