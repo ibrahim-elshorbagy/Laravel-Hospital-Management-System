@@ -23,6 +23,10 @@ class ClinicResource extends JsonResource
             'description' => $this->description,
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
             'updated_at' => (new Carbon($this->updated_at))->format('Y-m-d'),
+
+            'specialization' => $this->whenLoaded('specialization',function(){
+                return $this->specialization->name;
+            }),
         ];
     }
 }

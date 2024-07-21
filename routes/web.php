@@ -3,6 +3,7 @@
 use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClinicController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ServiceController;
@@ -31,6 +32,17 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('service',ServiceController::class);
     Route::resource('package',PackageController::class);
     Route::resource('patient',PatientController::class);
+
+    Route::resource('invoice',InvoiceController::class);
+
+    Route::get('/invoice-get/clinics', [InvoiceController::class, 'getAllClinics']);
+    Route::get('/clinics/{clinic}/doctors', [InvoiceController::class, 'getDoctorsByClinic']);
+
+    Route::get('/invoice-get/services', [InvoiceController::class, 'getAllServices']);
+    Route::get('/invoice-get/packages', [InvoiceController::class, 'getAllPackages']);
+    Route::get('/invoices/{id}/show', [InvoiceController::class, 'ShowInvoice'])->name('invoices.show');
+
+
 });
 
 

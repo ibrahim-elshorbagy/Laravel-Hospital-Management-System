@@ -202,86 +202,88 @@ export default function Create({ auth, services }) {
                             </div>
 
                             {/* Display total price before discount */}
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="total_before_discount"
-                                    value="Total Before Discount"
-                                />
-                                <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
-                                    ${data.Total_before_discount.toFixed(2)}
+                            <div>
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="total_before_discount"
+                                        value="Total Before Discount"
+                                    />
+                                    <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
+                                        ${data.Total_before_discount.toFixed(2)}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Discount value */}
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="discount_value"
-                                    value="Discount Value"
-                                />
+                                {/* Discount value */}
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="discount_value"
+                                        value="Discount Value"
+                                    />
 
-                                <TextInput
-                                    id="discount_value"
-                                    type="number"
-                                    name="discount_value"
-                                    value={data.discount_value}
-                                    className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
-                                    onChange={(e) =>
-                                        setData(
-                                            "discount_value",
-                                            e.target.value
-                                        )
-                                    }
-                                />
+                                    <TextInput
+                                        id="discount_value"
+                                        type="number"
+                                        name="discount_value"
+                                        value={data.discount_value}
+                                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+                                        onChange={(e) =>
+                                            setData(
+                                                "discount_value",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
 
-                                <InputError
-                                    message={errors.discount_value}
-                                    className="mt-2"
-                                />
-                            </div>
-
-                            {/* Display total price after discount */}
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="total_after_discount"
-                                    value="Total After Discount"
-                                />
-                                <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
-                                    ${data.Total_after_discount.toFixed(2)}
+                                    <InputError
+                                        message={errors.discount_value}
+                                        className="mt-2"
+                                    />
                                 </div>
-                            </div>
 
-                            {/* Tax rate */}
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="tax_rate"
-                                    value="Tax Rate (%)"
-                                />
+                                {/* Display total price after discount */}
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="total_after_discount"
+                                        value="Total After Discount"
+                                    />
+                                    <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
+                                        ${data.Total_after_discount.toFixed(2)}
+                                    </div>
+                                </div>
 
-                                <TextInput
-                                    id="tax_rate"
-                                    type="number"
-                                    name="tax_rate"
-                                    value={data.tax_rate}
-                                    className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
-                                    onChange={(e) =>
-                                        setData("tax_rate", e.target.value)
-                                    }
-                                />
+                                {/* Tax rate */}
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="tax_rate"
+                                        value="Tax Rate (%)"
+                                    />
 
-                                <InputError
-                                    message={errors.tax_rate}
-                                    className="mt-2"
-                                />
-                            </div>
+                                    <TextInput
+                                        id="tax_rate"
+                                        type="number"
+                                        name="tax_rate"
+                                        value={data.tax_rate}
+                                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+                                        onChange={(e) =>
+                                            setData("tax_rate", e.target.value)
+                                        }
+                                    />
 
-                            {/* Display total price with tax */}
-                            <div className="mt-4">
-                                <InputLabel
-                                    htmlFor="total_with_tax"
-                                    value="Total With Tax"
-                                />
-                                <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
-                                    ${data.Total_with_tax.toFixed(2)}
+                                    <InputError
+                                        message={errors.tax_rate}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                {/* Display total price with tax */}
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="total_with_tax"
+                                        value="Total With Tax"
+                                    />
+                                    <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
+                                        ${data.Total_with_tax.toFixed(2)}
+                                    </div>
                                 </div>
                             </div>
 

@@ -60,8 +60,25 @@ const Sidebar = () => {
         },
         {
             title: "Patients",
-            links: [{ text: "Patients", href: "patient.index", icon: FaUserInjured }],
+            links: [
+                {
+                    text: "Patients",
+                    href: "patient.index",
+                    icon: FaUserInjured,
+                },
+            ],
             icon: FaUserInjured,
+        },
+        {
+            title: "Accounting",
+            links: [
+                {
+                    text: "Invoices",
+                    href: "invoice.index",
+                    icon: FaFileInvoiceDollar,
+                },
+            ],
+            icon: FaFileInvoiceDollar,
         },
         {
             title: "Appointments",
@@ -85,17 +102,7 @@ const Sidebar = () => {
             ],
             icon: FaFileMedical,
         },
-        {
-            title: "Billing",
-            links: [
-                {
-                    text: "Invoices",
-                    href: "dashboard",
-                    icon: FaFileInvoiceDollar,
-                },
-            ],
-            icon: FaFileInvoiceDollar,
-        },
+
         {
             title: "Pharmacy",
             links: [{ text: "Medicines", href: "dashboard", icon: FaPills }],
