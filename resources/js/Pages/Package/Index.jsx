@@ -126,9 +126,7 @@ export default function Index({
                                             <th className="px-3 py-3 min-w-[150px]">
                                                 Discount Value
                                             </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total After Discount
-                                            </th>
+
                                             <th className="px-3 py-3 min-w-[150px]">
                                                 Tax Rate
                                             </th>
@@ -182,7 +180,6 @@ export default function Index({
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3 text-right"></th>
                                         </tr>
                                     </thead>
@@ -210,11 +207,7 @@ export default function Index({
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {apackage.discount_value}
                                                 </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {
-                                                        apackage.Total_after_discount
-                                                    }
-                                                </td>
+                                                
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {apackage.tax_rate}
                                                 </td>
