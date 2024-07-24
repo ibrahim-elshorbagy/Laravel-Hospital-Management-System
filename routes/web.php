@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ClinicController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\PackageController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\Hospital\ClinicController;
+use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\Hospital\PackageController;
+use App\Http\Controllers\Patient\PatientController;
+use App\Http\Controllers\Hospital\ServiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

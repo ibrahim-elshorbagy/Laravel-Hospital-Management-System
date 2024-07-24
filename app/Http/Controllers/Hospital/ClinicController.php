@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Hospital;
 
-use App\Models\Clinic;
+use App\Http\Controllers\Controller;
+use App\Models\Clinic\Clinic;
 use App\Http\Requests\StoreClinicRequest;
 use App\Http\Requests\UpdateClinicRequest;
 use App\Http\Resources\ClinicResource;

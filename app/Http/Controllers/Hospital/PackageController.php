@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Hospital;
 
-use App\Models\Package;
+use App\Http\Controllers\Controller;
+
+use App\Models\Clinic\Package;
 use App\Http\Requests\StorePackageRequest;
 use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Resources\PackageResource;
 use App\Http\Resources\ServiceResource;
-use App\Models\Service;
+use App\Models\Clinic\Service;
 
 class PackageController extends Controller
 {

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Doctor;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Specialization extends Model
+class DoctorAppointment extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 
     public function doctor()
     {

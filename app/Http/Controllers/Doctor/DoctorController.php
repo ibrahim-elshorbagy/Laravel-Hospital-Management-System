@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Doctor;
 
-use App\Models\Doctor;
+use App\Models\Doctor\Doctor;
 
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
@@ -10,8 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ClinicResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\SpecializationResource;
-use App\Models\Clinic;
-use App\Models\Specialization;
+use App\Models\Clinic\Clinic;
+use App\Models\Doctor\Specialization;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 

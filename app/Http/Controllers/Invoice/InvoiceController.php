@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Invoice;
+use App\Http\Controllers\Controller;
 
-use App\Models\Invoice;
+
+use App\Models\Invoice\Invoice;
 use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\PackageResource;
 use App\Http\Resources\ServiceResource;
-use App\Models\Clinic;
-use App\Models\Doctor;
-use App\Models\Package;
-use App\Models\Patient;
-use App\Models\Service;
+use App\Models\Clinic\Clinic;
+use App\Models\Doctor\Doctor;
+use App\Models\Clinic\Package;
+use App\Models\Patient\Patient;
+use App\Models\Clinic\Service;
 
 class InvoiceController extends Controller
 {

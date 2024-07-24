@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Clinic;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Package extends Model
+class Service extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function services()
+    public function packages()
     {
-        return $this->belongsToMany(Service::class, 'package_service');
+        return $this->belongsToMany(Package::class, 'package_service');
     }
 }
+

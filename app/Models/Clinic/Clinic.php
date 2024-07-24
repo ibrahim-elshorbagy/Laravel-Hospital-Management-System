@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Clinic;
 
+use App\Models\Doctor\Doctor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
