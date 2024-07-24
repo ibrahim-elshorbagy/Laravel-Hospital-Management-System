@@ -24,31 +24,31 @@ class StoreInvoiceRequest extends FormRequest
 
     return [
             'selectedServices' => ['nullable', 'array'],
-            'selectedServices.*.id' => ['exists:services,id'],
-            'selectedServices.*.name' => ['string'],
-            'selectedServices.*.price' => ['numeric'],
+            // 'selectedServices.*.id' => ['exists:services,id'],
+            // 'selectedServices.*.name' => ['string'],
+            // 'selectedServices.*.price' => ['numeric'],
 
-            'selectedPackages' => ['nullable', 'array'],
-            'selectedPackages.*.id' => ['exists:packages,id'],
-            'selectedPackages.*.name' => ['string'],
-            'selectedPackages.*.price' => ['numeric'],
+            // 'selectedPackages' => ['nullable', 'array'],
+            // 'selectedPackages.*.id' => ['exists:packages,id'],
+            // 'selectedPackages.*.name' => ['string'],
+            // 'selectedPackages.*.price' => ['numeric'],
 
-            'clinic' => ['nullable', 'exists:clinics,id'],
+            // 'clinic' => ['nullable', 'exists:clinics,id'],
 
-            'selectedDoctors' => ['nullable', 'array'],
-            'selectedDoctors.*.id' => ['exists:doctors,id'],
-            'selectedDoctors.*.name' => ['string'],
-            'selectedDoctors.*.price' => ['numeric'],
+            // 'selectedDoctors' => ['nullable', 'array'],
+            // 'selectedDoctors.*.id' => ['exists:doctors,id'],
+            // 'selectedDoctors.*.name' => ['string'],
+            // 'selectedDoctors.*.price' => ['numeric'],
 
 
-            'total_before_discount' => ['required', 'numeric', 'max:99999999.99'],
-            'discount_value' => ['required', 'numeric', 'max:99999999.99'],
-            'total_after_discount' => ['required', 'numeric', 'max:99999999.99'],
-            'tax_rate' => ['required', 'numeric'],
-            'total_with_tax' => ['required', 'numeric', 'max:99999999.99'],
+            // 'total_before_discount' => ['required', 'numeric', 'max:99999999.99'],
+            // 'discount_value' => ['required', 'numeric', 'max:99999999.99'],
+            // 'total_after_discount' => ['required', 'numeric', 'max:99999999.99'],
+            // 'tax_rate' => ['required', 'numeric'],
+            // 'total_with_tax' => ['required', 'numeric', 'max:99999999.99'],
 
-            'patient.id' => ['nullable', 'exists:patients,id'],
-            'patient.name' => ['required', 'string'],
+            // 'patient.id' => ['nullable', 'exists:patients,id'],
+            // 'patient.name' => ['required', 'string'],
 
 
         ];

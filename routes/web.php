@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/invoice-get/services', [InvoiceController::class, 'getAllServices']);
     Route::get('/invoice-get/packages', [InvoiceController::class, 'getAllPackages']);
+    Route::get('/invoice-get/patients', [InvoiceController::class, 'getPatient']);
+
     Route::get('/invoices/{id}/show', [InvoiceController::class, 'ShowInvoice'])->name('invoices.show');
 
 

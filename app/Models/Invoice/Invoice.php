@@ -3,6 +3,9 @@
 namespace App\Models\Invoice;
 
 use App\Models\Clinic\Clinic;
+use App\Models\Clinic\Service;
+use App\Models\Doctor\Doctor;
+use App\Models\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +15,25 @@ class Invoice extends Model
 
     protected $guarded = [];
 
-    public function clinic(){
-        return $this->belongsTo(Clinic::class);
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+    // public function clinic(){
+    //     return $this->belongsTo(Clinic::class);
+    // }
+    public function details()
+    {
+        return $this->hasOne(InvoiceDetail::class);
+    }
+
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class, 'doctor_invoice');
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_invoice');
     }
 }

@@ -3,14 +3,14 @@ import InputLabel from "@/Components/InputLabel";
 import SelectInput from "@/Components/SelectInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, Link, useForm, router } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DoctorInvoice from "./DoctorInvoice";
 import ServiceInvoice from "./ServiceInvoice";
 import PackageInvoice from "./PackageInvoice";
-
-export default function Create({ auth, patients }) {
+import Select from "react-select";
+export default function Create({ auth, patients, queryParams = [] }) {
     const { data, setData, post, errors } = useForm({
         selectedServices: [],
         selectedPackages: [],
@@ -119,6 +119,41 @@ export default function Create({ auth, patients }) {
         post(route("invoice.store"));
     };
 
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+    const searchFieldChanged = (inputValue) => {
+        if (!inputValue) {
+            setOptions([]);
+            return;
+        }
+
+        axios
+            .get("/invoice-get/patients", {
+                params: { search: inputValue },
+            })
+            .then((response) => {
+                const patients = response.data;
+
+                const formattedOptions = patients.map(patient => ({
+                    value: {id: patient.id , name: patient.name},
+                    label: patient.name,
+                }));
+
+                setOptions(formattedOptions);
+            })
+            .catch((error) => {
+                console.error('Error fetching patients:', error);
+                setOptions([]);
+            });
+    }
+        const handlePatientChange = (selectedOption) => {
+            setSelectedOption(selectedOption);
+            if (selectedOption) {
+                setData("patient", selectedOption.value);
+            }
+        };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -183,56 +218,16 @@ export default function Create({ auth, patients }) {
                                         value="Patient"
                                     />
                                     <div className="flex items-center">
-                                        <SelectInput
-                                            name="patient_id"
-                                            id="patient"
-                                            disabled={manualPatient}
-                                            className="block w-5/6 mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
-                                            onChange={(e) => {
-                                                const selectedPatient =
-                                                    patients.find(
-                                                        (patient) =>
-                                                            patient.id ===
-                                                            parseInt(
-                                                                e.target.value
-                                                            )
-                                                    );
-                                                setData({
-                                                    ...data,
-                                                    patient: {
-                                                        id: selectedPatient.id,
-                                                        name: selectedPatient
-                                                            .user.name,
-                                                    },
-                                                });
-                                            }}
-                                        >
-                                            <option value="">
-                                                Select Patient
-                                            </option>
-                                            {patients.map((patient) => (
-                                                <option
-                                                    key={patient.id}
-                                                    value={patient.id}
-                                                >
-                                                    {patient.user.name}
-                                                </option>
-                                            ))}
-                                        </SelectInput>
-                                        <button
-                                            type="button"
-                                            className="ml-2 text-sm text-emerald-500"
-                                            onClick={() =>
-                                                setManualPatient(!manualPatient)
-                                            }
-                                        >
-                                            {manualPatient
-                                                ? "Select"
-                                                : "manually"}
-                                        </button>
+                                        <Select
+                                            className="w-5/6 pt-1 "
+                                            options={options}
+                                            value={selectedOption}
+                                            onChange={handlePatientChange}
+                                            onInputChange={searchFieldChanged}
+                                        />
+
                                     </div>
-                                    {manualPatient && (
-                                        <TextInput
+                                    <TextInput
                                             name="patient_name"
                                             id="patient_name"
                                             className="block w-5/6 mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
@@ -247,7 +242,7 @@ export default function Create({ auth, patients }) {
                                                 })
                                             }
                                         />
-                                    )}
+
                                     <InputError
                                         message={errors["patient.name"]}
                                         className="mt-2"

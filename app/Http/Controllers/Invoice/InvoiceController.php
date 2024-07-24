@@ -10,12 +10,14 @@ use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\InvoiceResource;
 use App\Http\Resources\PackageResource;
+use App\Http\Resources\PatientResource;
 use App\Http\Resources\ServiceResource;
 use App\Models\Clinic\Clinic;
 use App\Models\Doctor\Doctor;
 use App\Models\Clinic\Package;
 use App\Models\Patient\Patient;
 use App\Models\Clinic\Service;
+use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -58,13 +60,27 @@ class InvoiceController extends Controller
 
     }
 
+    public function getPatient(){
+        $patients = Patient::query()
+            ->select(['id','user_id'])
+            ->with(['user' => function($q) {
+                $q->select('id', 'name');
+            }])
+            ->whereHas('user', function($query) {
+                $query->where('name', 'like', '%' . request('search') . '%');
+            })
+            ->paginate(10);
+        return response(PatientResource::collection($patients));
+
+
+    }
     public function getAllClinics()
     {
         $clinics = Clinic::select('id', 'name')->get();
         return response()->json($clinics);
     }
 
-        public function getDoctorsByClinic($clinicId)
+    public function getDoctorsByClinic($clinicId)
     {
         $doctors = Doctor::where('clinic_id', $clinicId)
         ->select('id', 'user_id', 'price')
@@ -91,6 +107,7 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
+        dd($request->all());
         // Get validated data
         $validated = $request->validated();
         // Process services and packages data
