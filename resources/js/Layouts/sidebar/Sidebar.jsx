@@ -16,23 +16,16 @@ import {
 
 import { MdMedicalServices } from "react-icons/md";
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
     const sections = [
         {
             title: "Dashboard",
             links: [
-                {
-                    text: "Home",
-                    href: "dashboard",
-                    icon: FaTachometerAlt,
-                },
-                {
-                    text: "Clinics",
-                    href: "clinic.index",
-                    icon: FaHospital,
-                },
+                { text: "Home", href: "dashboard", icon: FaTachometerAlt },
+                { text: "Clinics", href: "clinic.index", icon: FaHospital },
             ],
             icon: FaTachometerAlt,
+            roles: ["admin", "manager"],
         },
         {
             title: "Doctors",
@@ -40,8 +33,8 @@ const Sidebar = () => {
                 { text: "All Doctors", href: "doctor.index", icon: FaUserMd },
             ],
             icon: FaUserMd,
+            roles: ["admin", "doctor"],
         },
-
         {
             title: "Services",
             links: [
@@ -57,6 +50,7 @@ const Sidebar = () => {
                 },
             ],
             icon: FaHandHoldingMedical,
+            roles: ["admin", "staff"],
         },
         {
             title: "Patients",
@@ -68,6 +62,7 @@ const Sidebar = () => {
                 },
             ],
             icon: FaUserInjured,
+            roles: ["admin", "doctor", "staff"],
         },
         {
             title: "Accounting",
@@ -79,55 +74,74 @@ const Sidebar = () => {
                 },
             ],
             icon: FaFileInvoiceDollar,
+            roles: ["admin", "accountant"],
         },
         {
             title: "Appointments",
             links: [
                 {
                     text: "Manage Appointments",
-                    href: "dashboard",
+                    href: "dashboard.index",
                     icon: FaCalendarCheck,
                 },
             ],
             icon: FaCalendarCheck,
+            roles: ["admin", "doctor", "receptionist"],
         },
         {
             title: "Medical Records",
             links: [
                 {
                     text: "Records",
-                    href: "dashboard",
+                    href: "dashboard.index",
                     icon: FaFileMedical,
                 },
             ],
             icon: FaFileMedical,
+            roles: ["admin", "doctor", "nurse"],
         },
-
         {
             title: "Pharmacy",
-            links: [{ text: "Medicines", href: "dashboard", icon: FaPills }],
+            links: [
+                { text: "Medicines", href: "dashboard.index", icon: FaPills },
+            ],
             icon: FaPills,
+            roles: ["admin", "pharmacist"],
         },
         {
             title: "Laboratory",
-            links: [{ text: "Tests", href: "dashboard", icon: FaMicroscope }],
+            links: [
+                { text: "Tests", href: "dashboard.index", icon: FaMicroscope },
+            ],
             icon: FaMicroscope,
+            roles: ["admin", "lab_technician"],
         },
         {
             title: "Radiology",
-            links: [{ text: "Imaging", href: "dashboard", icon: FaXRay }],
+            links: [{ text: "Imaging", href: "dashboard.index", icon: FaXRay }],
             icon: FaXRay,
+            roles: ["admin", "radiologist"],
         },
         {
             title: "Settings",
             links: [
-                { text: "General Settings", href: "dashboard", icon: FaCog },
+                {
+                    text: "General Settings",
+                    href: "dashboard.index",
+                    icon: FaCog,
+                },
             ],
             icon: FaCog,
+            roles: ["admin"],
         },
     ];
 
-    return <SidebarDisplay sections={sections} />;
+    // Filter sections based on user roles
+    const filteredSections = sections.filter((section) =>
+        section.roles.some((role) => user.roles.includes(role))
+    );
+
+    return <SidebarDisplay sections={filteredSections} />;
 };
 
 export default Sidebar;

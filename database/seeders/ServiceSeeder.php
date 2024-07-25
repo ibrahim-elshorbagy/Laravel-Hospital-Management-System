@@ -47,74 +47,62 @@ class ServiceSeeder extends Seeder
 
         // Packages
         $packages = [
-            [
-                'id' => 1,
-                'name' => 'Complete Health Package',
-                'description' => 'Includes all essential health checkups.',
-                'Total_before_discount' => 1000,
-                'discount_value' => 100,
-                'Total_after_discount' => 900,
-                'tax_rate' => '5',
-                'Total_with_tax' => 945,
-                'status' => 'active'
-            ],
-            [
-                'id' => 2,
-                'name' => 'Basic Health Package',
-                'description' => 'Includes basic health checkups.',
-                'Total_before_discount' => 500,
-                'discount_value' => 50,
-                'Total_after_discount' => 450,
-                'tax_rate' => '5',
-                'Total_with_tax' => 472.50,
-                'status' => 'active'
-            ],
-            [
-                'id' => 3,
-                'name' => 'Family Health Package',
-                'description' => 'Comprehensive health checkups for families.',
-                'Total_before_discount' => 1200,
-                'discount_value' => 150,
-                'Total_after_discount' => 1050,
-                'tax_rate' => '5',
-                'Total_with_tax' => 1102.50,
-                'status' => 'active'
-            ],
-            [
-                'id' => 4,
-                'name' => 'Elderly Care Package',
-                'description' => 'Health package tailored for elderly care.',
-                'Total_before_discount' => 800,
-                'discount_value' => 80,
-                'Total_after_discount' => 720,
-                'tax_rate' => '5',
-                'Total_with_tax' => 756,
-                'status' => 'active'
-            ],
-            [
-                'id' => 5,
-                'name' => 'Dental Health Package',
-                'description' => 'Comprehensive dental health package.',
-                'Total_before_discount' => 700,
-                'discount_value' => 70,
-                'Total_after_discount' => 630,
-                'tax_rate' => '5',
-                'Total_with_tax' => 661.50,
-                'status' => 'active'
-            ],
-            [
-                'id' => 6,
-                'name' => 'Cancer Screening Package',
-                'description' => 'Detailed screening for various types of cancer.',
-                'Total_before_discount' => 900,
-                'discount_value' => 90,
-                'Total_after_discount' => 810,
-                'tax_rate' => '5',
-                'Total_with_tax' => 850.50,
-                'status' => 'active'
-            ],
-        ];
-
+    [
+        'id' => 1,
+        'name' => 'Complete Health Package',
+        'description' => 'Includes all essential health checkups.',
+        'Total_before_discount' => 685,
+        'discount_value' => 100,
+        'Total_after_discount' =>585,
+        'tax_rate' => '5',
+        'Total_with_tax' => 614.25,
+        'status' => 'active'
+    ],
+    [
+        'id' => 2,
+        'name' => 'Basic Health Package',
+        'description' => 'Includes basic health checkups.',
+        'Total_before_discount' => 380,
+        'discount_value' => 50,
+        'Total_after_discount' => 330,
+        'tax_rate' => '5',
+        'Total_with_tax' => 346.5005,
+        'status' => 'active'
+    ],
+    [
+        'id' => 3,
+        'name' => 'Family Health Package',
+        'description' => 'Comprehensive health checkups for families.',
+        'Total_before_discount' => 660,
+        'discount_value' => 150,
+        'Total_after_discount' => 510,
+        'tax_rate' => '5',
+        'Total_with_tax' => 535.50,
+        'status' => 'active'
+    ],
+    [
+        'id' => 4,
+        'name' => 'Elderly Care Package',
+        'description' => 'Health package tailored for elderly care.',
+        'Total_before_discount' => 820,
+        'discount_value' => 80,
+        'Total_after_discount' => 740,
+        'tax_rate' => '5',
+        'Total_with_tax' => 777.00,
+        'status' => 'active'
+    ],
+    [
+        'id' => 5,
+        'name' => 'Dental Health Package',
+        'description' => 'Comprehensive dental health package.',
+        'Total_before_discount' => 640,
+        'discount_value' => 70,
+        'Total_after_discount' => 570,  
+        'tax_rate' => '5',
+        'Total_with_tax' => 598.50,  
+        'status' => 'active'
+    ],
+];
         DB::table('packages')->insert($packages);
 
         // Package Service

@@ -171,7 +171,7 @@ export default function Authenticated({ user, header, children }) {
             )}
 
             <div className="flex">
-                <Sidebar />
+                <Sidebar user={user} />
                 <main className="flex-1">{children}</main>
             </div>
         </div>
