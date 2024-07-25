@@ -21,7 +21,7 @@ class Invoice extends Model
     }
     // public function clinic(){
     //     return $this->belongsTo(Clinic::class);
-    // }
+    // }\
     public function details()
     {
         return $this->hasOne(InvoiceDetail::class);
@@ -29,11 +29,13 @@ class Invoice extends Model
 
     public function doctors()
     {
-        return $this->belongsToMany(Doctor::class, 'doctor_invoice');
+        return $this->belongsToMany(Doctor::class, 'doctor_invoices')
+                    ->withPivot('clinic_id', 'daily_patient_index');
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'service_invoice');
+        return $this->belongsToMany(Service::class, 'service_invoices')
+                    ->withPivot('daily_patient_index');
     }
 }

@@ -36,7 +36,7 @@ class InvoiceController extends Controller
 
 
         $invoices = $query->orderBy($sortFileds,$sortDirection)->paginate(10)->onEachSide(1);
-        return inertia('Accounting/Invoice/Index', [
+        return inertia('Invoice/Index', [
             'invoices' => InvoiceResource::collection($invoices),
             'queryParams' => request()->query() ?: null,
             'success'=>session('success'),
@@ -54,7 +54,7 @@ class InvoiceController extends Controller
             ->select(['id','user_id'])
             ->with(['user' => function($q) {$q->select('id','name');}])
             ->get();
-        return inertia('Accounting/Invoice/Create', [
+        return inertia('Invoice/Create', [
             'patients' => $patients,
         ]);
 
@@ -97,64 +97,16 @@ class InvoiceController extends Controller
 
     public function getAllPackages()
     {
-        $packages = Package::select('id', 'name','Total_with_tax')->get();
+        $packages = Package::select('id', 'name','Total_with_tax')->with(['services'])->get();
         return response()->json($packages);
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreInvoiceRequest $request)
-    {
-        dd($request->all());
-        // Get validated data
-        $validated = $request->validated();
-        // Process services and packages data
-        $services = $validated['selectedServices'] ?? [];
-        $packages = $validated['selectedPackages'] ?? [];
-        $doctors = $validated['selectedDoctors'] ?? [];
 
-        // Convert services and packages to JSON
-        $servicesJson = json_encode($services);
-        $packagesJson = json_encode($packages);
-        $doctorsJson = json_encode($doctors);
-
-        // Create new invoice
-        $invoice = new Invoice();
-        $invoice->patient_id = $validated['patient']['id'] ?? null;
-        $invoice->patient_name = $validated['patient']['name'] ?? null;
-        $invoice->clinic_id = $validated['clinic'] ?? null;
-        $invoice->doctor = $validated['selectedDoctors'][0]['id'] ?? null;
-        $invoice->services = $servicesJson;
-        $invoice->packages = $packagesJson;
-        $invoice->doctor = $doctorsJson;
-
-        $invoice->total_before_discount = $validated['total_before_discount'];
-        $invoice->discount_value = $validated['discount_value'];
-        $invoice->total_after_discount = $validated['total_after_discount'];
-        $invoice->tax_rate = $validated['tax_rate'];
-        $invoice->total_with_tax = $validated['total_with_tax'];
-
-        $invoice->save();
-
-        return $this->printInvoice($invoice);
-
-    }
-
-    public function printInvoice($invoice)
-    {
-
-        return inertia('Accounting/Invoice/PrintInvoice', [
-            'invoice' => $invoice,
-            'clinic_name' => $invoice->clinic->name ?? 'N/A'
-            ]
-        );
-    }
         public function ShowInvoice($id)
     {
         $invoice = Invoice::find($id)->with(['clinic'=>function($q){$q->select('id','name');}])->first();
-        return inertia('Accounting/Invoice/PrintInvoice', [
+        return inertia('Invoice/PrintInvoice', [
             'invoice' => $invoice,
             'clinic_name' => $invoice->clinic->name ?? 'N/A'
             ]

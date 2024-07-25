@@ -15,21 +15,26 @@ export default function Create({ auth, patients, queryParams = [] }) {
         selectedServices: [],
         selectedPackages: [],
         selectedDoctors: [],
+        doctors: [],
         total_before_discount: 0,
         discount_value: 0,
         total_after_discount: 0,
         tax_rate: 0,
         total_with_tax: 0,
-        invoiceType: "",
+        invoice_type: "",
         clinics: [],
         services: [],
         packages: [],
-        doctors: [],
-        patient: { id: "", name: "" },
+        patient: { id: "", name: "", email: ""},
     });
 
     const [invoiceType, setInvoiceType] = useState("");
+
     const [manualPatient, setManualPatient] = useState(false);
+    const manualPatientChange = () => {
+            setManualPatient(!manualPatient);
+            setData("patient", { id: "", name: "", email: ""});
+    };
 
     useEffect(() => {
         if (invoiceType === "clinic") {
@@ -116,7 +121,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        post(route("invoice.store"));
+        post(route("invoice-create.store"));
     };
 
   const [options, setOptions] = useState([]);
@@ -135,9 +140,9 @@ export default function Create({ auth, patients, queryParams = [] }) {
             .then((response) => {
                 const patients = response.data;
 
-                const formattedOptions = patients.map(patient => ({
-                    value: {id: patient.id , name: patient.name},
-                    label: patient.name,
+                const formattedOptions = patients.map((patient) => ({
+                    value: { id: patient.id, name: patient.name },
+                    label: `${patient.name} #${patient.id}`, //here
                 }));
 
                 setOptions(formattedOptions);
@@ -147,6 +152,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
                 setOptions([]);
             });
     }
+
         const handlePatientChange = (selectedOption) => {
             setSelectedOption(selectedOption);
             if (selectedOption) {
@@ -181,7 +187,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                 </span>
                                 <hr className="flex-1 my-6 border-gray-300 dark:border-gray-700" />
                             </div>
-
                             {/* Select invoice type */}
                             <div className="grid h-32 grid-cols-2 gap-4">
                                 <div className="mt-4">
@@ -193,9 +198,13 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                         name="invoiceType"
                                         id="invoice_type"
                                         className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
-                                        onChange={(e) =>
-                                            setInvoiceType(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setInvoiceType(e.target.value),
+                                                setData(
+                                                    "invoice_type",
+                                                    e.target.value
+                                                );
+                                        }}
                                     >
                                         <option value="">
                                             Select an option
@@ -211,40 +220,91 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                     />
                                 </div>
 
-                                {/* Select Patient */}
-                                <div className="mt-4">
-                                    <InputLabel
-                                        htmlFor="patient_id"
-                                        value="Patient"
-                                    />
-                                    <div className="flex items-center">
-                                        <Select
-                                            className="w-5/6 pt-1 "
-                                            options={options}
-                                            value={selectedOption}
-                                            onChange={handlePatientChange}
-                                            onInputChange={searchFieldChanged}
-                                        />
+                                {/* Patient */}
 
+                                <div className="grid">
+                                    <div className="flex items-center mb-2 space-x-4">
+                                        <InputLabel
+                                            htmlFor="patient_id"
+                                            value="Patient"
+                                        />
+                                        <div className="flex-1">
+                                            {/* Select a Patient */}
+                                            {manualPatient && (
+                                                <div className="flex items-center">
+                                                    <Select
+                                                        className="w-full"
+                                                        options={options}
+                                                        value={selectedOption}
+                                                        onChange={
+                                                            handlePatientChange
+                                                        }
+                                                        onInputChange={
+                                                            searchFieldChanged
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                            {/* Write Manually Patient */}
+                                            {!manualPatient && (
+                                                <div className="flex flex-col space-y-2">
+                                                    <TextInput
+                                                        name="name"
+                                                        id="name"
+                                                        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+                                                        placeholder="Enter patient name"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                patient: {
+                                                                    ...data.patient,
+                                                                    id: "",
+                                                                    name: e
+                                                                        .target
+                                                                        .value,
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                    <TextInput
+                                                        name="email"
+                                                        id="email"
+                                                        className="block w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
+                                                        placeholder="Enter patient email"
+                                                        type="email"
+                                                        onChange={(e) =>
+                                                            setData({
+                                                                ...data,
+                                                                patient: {
+                                                                    ...data.patient,
+                                                                    email: e
+                                                                        .target
+                                                                        .value,
+                                                                },
+                                                            })
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="w-auto">
+                                            <button
+                                                type="button"
+                                                className="ml-2 text-sm text-emerald-500"
+                                                onClick={manualPatientChange}
+                                            >
+                                                {manualPatient
+                                                    ? "Manually"
+                                                    : "Select"}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <TextInput
-                                            name="patient_name"
-                                            id="patient_name"
-                                            className="block w-5/6 mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
-                                            placeholder="Enter patient name"
-                                            onChange={(e) =>
-                                                setData({
-                                                    ...data,
-                                                    patient: {
-                                                        id: "",
-                                                        name: e.target.value,
-                                                    },
-                                                })
-                                            }
-                                        />
-
                                     <InputError
                                         message={errors["patient.name"]}
+                                        className="mt-2"
+                                    />
+                                    <InputError
+                                        message={errors["patient.email"]}
                                         className="mt-2"
                                     />
                                 </div>
@@ -257,7 +317,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                     setData={setData}
                                 />
                             )}
-
                             {invoiceType === "service" && (
                                 <ServiceInvoice
                                     services={data.services}
@@ -265,7 +324,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                     errors={errors}
                                 />
                             )}
-
                             {invoiceType === "package" && (
                                 <PackageInvoice
                                     packages={data.packages}
@@ -280,7 +338,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                 </span>
                                 <hr className="flex-1 my-6 border-gray-300 dark:border-gray-700" />
                             </div>
-
                             {/* Invoice Calculations */}
                             <div>
                                 <div className="mt-4">
@@ -366,7 +423,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="mt-6 text-right">
                                 <Link
                                     href={route("invoice.index")}

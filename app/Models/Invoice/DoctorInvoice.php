@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class DoctorInvoice extends Model
 {
     use HasFactory;
-    public $timestamps = false;
 
     protected $guarded = [];
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Invoice\InvoiceController;
 use App\Http\Controllers\Hospital\PackageController;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\Hospital\ServiceController;
+use App\Http\Controllers\Invoice\InvoiceCreateController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,6 +44,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/invoice-get/patients', [InvoiceController::class, 'getPatient']);
 
     Route::get('/invoices/{id}/show', [InvoiceController::class, 'ShowInvoice'])->name('invoices.show');
+
+    Route::post('/invoice-create', [InvoiceCreateController::class, 'store'])->name('invoice-create.store');
+
 
 
 });

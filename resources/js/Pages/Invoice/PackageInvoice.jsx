@@ -6,6 +6,7 @@ import InputError from "@/Components/InputError";
 export default function PackageInvoice({ packages, setData, errors }) {
     return (
         <div className="mt-4">
+
             <InputLabel htmlFor="package" value="Select Package" />
             <SelectInput
                 name="package"

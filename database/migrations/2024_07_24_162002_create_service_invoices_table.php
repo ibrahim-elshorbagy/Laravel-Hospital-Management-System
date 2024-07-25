@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->integer('daily_patient_index')->nullable();
+            $table->timestamps();
 
         });
     }

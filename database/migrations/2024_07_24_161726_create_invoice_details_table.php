@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal('total_after_discount', 8, 2);
             $table->string('tax_rate');
             $table->decimal('total_with_tax', 8, 2);
+            $table->timestamps();
+
         });
     }
 

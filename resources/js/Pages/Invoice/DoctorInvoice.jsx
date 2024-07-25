@@ -27,7 +27,7 @@ export default function DoctorInvoice({ clinics, setData }) {
             <SelectInput
                 name="clinic"
                 id="clinic"
-                
+
                 className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50"
                 onChange={(e) => {
                     setSelectedClinic(e.target.value);

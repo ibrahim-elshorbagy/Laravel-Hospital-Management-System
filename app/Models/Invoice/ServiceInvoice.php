@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceInvoice extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     protected $guarded = [];
+     public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
 }
