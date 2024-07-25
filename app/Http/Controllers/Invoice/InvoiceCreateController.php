@@ -23,13 +23,15 @@ class InvoiceCreateController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
+        // dd($request->all());
         $data = $request->validated();
 
         DB::beginTransaction();
         try {
 
         //Zero have account ?
-        if(isset($data['patient']['email'])){
+
+        if($data['account_type'] && isset($data['patient']['email'])){ //new acccount
             $userData = [
                 'name' => $data['patient']['name'],
                 'email' => $data['patient']['email'],
@@ -45,6 +47,9 @@ class InvoiceCreateController extends Controller
             $email = $data['patient']['email'];
             $password = " 'password' - Plase Change it";
         }
+        elseif($data['account_type']){ //just name
+            //No thting
+        }
         else{
             $patient = Patient::find($data['patient']['id']);
             $email = $patient->user->email;
@@ -54,7 +59,7 @@ class InvoiceCreateController extends Controller
 
         //First Table Make Ivoice
         $invoiceData = [
-            'patient_id' => $data['patient']['id'] ?? $patient->id,
+            'patient_id' => $data['patient']['id'] ? $patient->id : null,
             'name' => $data['patient']['name'],
             'invoice_type'=>$data['invoice_type'],
         ];
@@ -109,7 +114,7 @@ class InvoiceCreateController extends Controller
 
 
 
-        return $this->printInvoice($email,$password,$invoice,$request['invoice_type']);
+        return $this->printInvoice($email =null,$password = null,$invoice,$request['invoice_type']);
 
     }
 

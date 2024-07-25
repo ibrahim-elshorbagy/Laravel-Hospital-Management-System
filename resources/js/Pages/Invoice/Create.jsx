@@ -25,15 +25,19 @@ export default function Create({ auth, patients, queryParams = [] }) {
         clinics: [],
         services: [],
         packages: [],
-        patient: { id: "", name: "", email: ""},
+        account_type: true,
+        patient: { id: "", name: "", email: "" },
     });
 
     const [invoiceType, setInvoiceType] = useState("");
 
-    const [manualPatient, setManualPatient] = useState(false);
+    const [manualPatient, setManualPatient] = useState(true);
     const manualPatientChange = () => {
-            setManualPatient(!manualPatient);
-            setData("patient", { id: "", name: "", email: ""});
+        setManualPatient(!manualPatient);
+        setData("patient", { id: "", name: "", email: "" });
+
+        setData("account_type", !data.account_type);
+        console.log(manualPatient);
     };
 
     useEffect(() => {
@@ -230,7 +234,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                         />
                                         <div className="flex-1">
                                             {/* Select a Patient */}
-                                            {manualPatient && (
+                                            {!manualPatient && (
                                                 <div className="flex items-center">
                                                     <Select
                                                         className="w-full"
@@ -246,7 +250,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                                 </div>
                                             )}
                                             {/* Write Manually Patient */}
-                                            {!manualPatient && (
+                                            {manualPatient && (
                                                 <div className="flex flex-col space-y-2">
                                                     <TextInput
                                                         name="name"
@@ -294,8 +298,8 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                                 onClick={manualPatientChange}
                                             >
                                                 {manualPatient
-                                                    ? "Manually"
-                                                    : "Select"}
+                                                    ? "Select"
+                                                    : "Manually"}
                                             </button>
                                         </div>
                                     </div>

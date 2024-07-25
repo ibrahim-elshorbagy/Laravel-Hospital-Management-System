@@ -23,6 +23,7 @@ class StoreInvoiceRequest extends FormRequest
     {
 
     return [
+            'account_type'=>['required','boolean'],
             'invoice_type'=>['required','string'],
             'selectedServices' => ['nullable', 'array'],
             'selectedServices.*.id' => ['exists:services,id'],
