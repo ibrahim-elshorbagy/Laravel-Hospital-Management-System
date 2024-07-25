@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->enum('invoice_type',['clinic','service','package'])->nullable();
             $table->foreignId('patient_id')->nullable()->constrained('patients')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->timestamps();

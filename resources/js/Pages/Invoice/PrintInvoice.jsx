@@ -7,17 +7,14 @@ export default function PrintInvoice({ invoice_type, invoice, email, password, s
     }, []);
 
     const renderDetails = () => {
-        console.log("Invoice Type:", invoice_type);
-        console.log("Invoice Data:", invoice);
-
         if (
-            invoice_type === "clinic" &&
+            (invoice_type === "clinic" || invoice.invoice_type === "clinic") &&
             invoice.doctors &&
             invoice.doctors.length > 0
         ) {
             return (
                 <div className="mb-2">
-                    <h2 className="text-lg font-semibold">Doctors</h2>
+                    <h2 className="text-lg font-semibold">Doctor Details</h2>
                     <ul>
                         {invoice.doctors.map((doctor, index) => (
                             <li key={index}>
@@ -36,13 +33,13 @@ export default function PrintInvoice({ invoice_type, invoice, email, password, s
         }
 
         if (
-            invoice_type === "service" &&
+            (invoice_type === "service" || invoice.invoice_type === "service")&&
             invoice.services &&
             invoice.services.length > 0
         ) {
             return (
                 <div className="mb-2">
-                    <h2 className="text-lg font-semibold">Services</h2>
+                    <h2 className="text-lg font-semibold">Services Details</h2>
                     <ul>
                         {invoice.services.map((service, index) => (
                             <li key={index}>
@@ -59,7 +56,7 @@ export default function PrintInvoice({ invoice_type, invoice, email, password, s
         }
 
         if (
-            invoice_type === "package" &&
+            (invoice_type === "package" || invoice.invoice_type === "package")&&
             invoice.services &&
             invoice.services.length > 0
         ) {
@@ -130,7 +127,9 @@ export default function PrintInvoice({ invoice_type, invoice, email, password, s
                     </p>
                     <hr className="my-2 border-gray-300 dark:border-gray-700" />
 
-                    {site && <p>Site: {site}</p>}
+                    {(site || invoice.site) && (
+                        <p>Site: {site || invoice.site}</p>
+                    )}
                 </div>
             </div>
         </div>

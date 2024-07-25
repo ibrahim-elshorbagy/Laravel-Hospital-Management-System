@@ -20,7 +20,7 @@ export default function Index({
         } else {
             delete queryParams[name];
         }
-        if (name === "patient_name") {
+        if (name === "name") {
             delete queryParams.page;
         }
 
@@ -97,11 +97,13 @@ export default function Index({
                                                 }
                                                 sortChanged={sortChanged}
                                             >
-                                                ID
+                                                Inoivce ID
                                             </TableHeading>
-
+                                            <th className="px-3 py-3 min-w-[150px]">
+                                                Patien ID
+                                            </th>
                                             <TableHeading
-                                                name="patient_name"
+                                                name="name"
                                                 sort_field={
                                                     queryParams.sort_field
                                                 }
@@ -113,18 +115,6 @@ export default function Index({
                                                 Name
                                             </TableHeading>
 
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total Before Discount
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Discount Value
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Total After Discount
-                                            </th>
-                                            <th className="px-3 py-3 min-w-[150px]">
-                                                Tax Rate
-                                            </th>
                                             <th className="px-3 py-3 min-w-[150px]">
                                                 Total With Tax
                                             </th>
@@ -150,28 +140,22 @@ export default function Index({
                                     <thead className="text-xs text-gray-700 uppercase border-b-2 border-gray-500 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr className="text-nowrap">
                                             <th className="px-3 py-3"></th>
+                                            <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3">
                                                 <TextInput
                                                     className="w-full min-w-[150px]"
                                                     placeholder="Patient Name"
                                                     onSubmit={(e) =>
                                                         searchFieldChanged(
-                                                            "patient_name",
+                                                            "name",
                                                             e.target.value
                                                         )
                                                     }
                                                     onKeyPress={(e) =>
-                                                        onKeyPress(
-                                                            "patient_name",
-                                                            e
-                                                        )
+                                                        onKeyPress("name", e)
                                                     }
                                                 ></TextInput>
                                             </th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
-                                            <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3 text-right"></th>
@@ -187,25 +171,12 @@ export default function Index({
                                                     {invoice.id}
                                                 </td>
                                                 <td className="px-3 py-2">
-                                                    {invoice.patient_name}
+                                                    #{invoice.patient_id}
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    {invoice.name}
                                                 </td>
 
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {
-                                                        invoice.total_before_discount
-                                                    }
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {invoice.discount_value}
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {
-                                                        invoice.total_after_discount
-                                                    }
-                                                </td>
-                                                <td className="px-3 py-2 text-nowrap">
-                                                    {invoice.tax_rate}
-                                                </td>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {invoice.total_with_tax}
                                                 </td>

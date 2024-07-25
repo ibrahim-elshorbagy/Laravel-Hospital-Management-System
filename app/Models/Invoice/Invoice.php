@@ -19,9 +19,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(Patient::class);
     }
-    // public function clinic(){
-    //     return $this->belongsTo(Clinic::class);
-    // }\
+    public function clinic(){
+        return $this->belongsTo(Clinic::class);
+    }
     public function details()
     {
         return $this->hasOne(InvoiceDetail::class);

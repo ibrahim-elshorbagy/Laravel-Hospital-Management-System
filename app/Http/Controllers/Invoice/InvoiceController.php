@@ -5,19 +5,14 @@ use App\Http\Controllers\Controller;
 
 
 use App\Models\Invoice\Invoice;
-use App\Http\Requests\StoreInvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\DoctorResource;
-use App\Http\Resources\InvoiceResource;
-use App\Http\Resources\PackageResource;
+use App\Http\Resources\IndexInvoiceResource;
 use App\Http\Resources\PatientResource;
-use App\Http\Resources\ServiceResource;
 use App\Models\Clinic\Clinic;
 use App\Models\Doctor\Doctor;
 use App\Models\Clinic\Package;
 use App\Models\Patient\Patient;
 use App\Models\Clinic\Service;
-use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -30,14 +25,14 @@ class InvoiceController extends Controller
         $sortFileds = request('sort_field','id') ;
         $sortDirection = request('sort_direction','asc');
 
-        if(request('patient_name')){
-            $query->where('patient_name', 'like', '%' . request('patient_name') . '%');
+        if(request('name')){
+            $query->where('name', 'like', '%' . request('name') . '%');
         }
 
 
-        $invoices = $query->orderBy($sortFileds,$sortDirection)->paginate(10)->onEachSide(1);
+        $invoices = $query->orderBy($sortFileds,$sortDirection)->with(['patient'=>function($q){$q->select('id','user_id');},'details'=>function($q){$q->select('id','invoice_id','total_with_tax');}])->paginate(10)->onEachSide(1);
         return inertia('Invoice/Index', [
-            'invoices' => InvoiceResource::collection($invoices),
+            'invoices' => IndexInvoiceResource::collection($invoices),
             'queryParams' => request()->query() ?: null,
             'success'=>session('success'),
         ]);
@@ -105,10 +100,28 @@ class InvoiceController extends Controller
 
         public function ShowInvoice($id)
     {
-        $invoice = Invoice::find($id)->with(['clinic'=>function($q){$q->select('id','name');}])->first();
+
+    $invoice = Invoice::find($id);
+    $invoice->load([
+        'details' => function ($q) {
+            $q->select('invoice_id', 'total_before_discount', 'discount_value', 'total_after_discount', 'tax_rate', 'total_with_tax');
+        },
+        'doctors' => function ($q) {
+            $q->select('doctors.id', 'user_id', 'price');
+        },
+        'doctors.user' => function ($q) {
+            $q->select('users.id', 'users.name');
+        },
+        'services' => function ($q) {
+            $q->select('services.id', 'services.name', 'services.price');
+        }
+    ]);
+
+
+            // dd($invoice->toJson());
+
         return inertia('Invoice/PrintInvoice', [
             'invoice' => $invoice,
-            'clinic_name' => $invoice->clinic->name ?? 'N/A'
             ]
         );
     }
@@ -143,6 +156,8 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+        return to_route('invoice.index')->with('success','Invoice deleted successfully');
+
     }
 }
