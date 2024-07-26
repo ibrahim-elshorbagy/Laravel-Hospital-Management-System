@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Doctor\DoctorController;
+use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Hospital\ClinicController;
 use App\Http\Controllers\Invoice\InvoiceController;
@@ -51,8 +52,18 @@ Route::group(['middleware' => ['auth', 'verified','role:admin']], function () {
 
 
 });
+
 Route::group(['middleware' => ['auth', 'verified','role:patient']], function () {
+
     Route::get('/my-ivoice', [PatientDashboardController::class, 'MyInvoice'])->name('my-invoice');
+
+});
+
+Route::group(['middleware' => ['auth', 'verified','role:doctor']], function () {
+
+    Route::get('doc/my-patient', [DoctorDashboardController::class, 'MyPatient'])->name('doc.my-patient');
+    Route::post('doc/my-patient', [DoctorDashboardController::class, 'changeStatus'])->name('doc.patient.change-status');
+
 });
 
 Route::middleware('auth')->group(function () {

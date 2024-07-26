@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
             $table->integer('daily_patient_index')->nullable();
+            $table->enum('status', ['pending', 'entered', 'completed', 'canceled'])->default('pending');
+
             $table->timestamps();
 
         });

@@ -95,6 +95,18 @@ const Sidebar = ({ user }) => {
             roles: ["patient"],
         },
         //doctor
+        {
+            title: "Patients",
+            links: [
+                {
+                    text: "My Patients",
+                    href: "doc.my-patient",
+                    icon: FaUserInjured,
+                },
+            ],
+            icon: FaUserInjured,
+            roles: ["doctor"],
+        },
 
         {
             title: "Appointments",
@@ -106,7 +118,7 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaCalendarCheck,
-            roles: ["admin", "doctor", "receptionist"],
+            roles: ["admin", "receptionist"],
         },
         {
             title: "Medical Records",
@@ -118,7 +130,7 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaFileMedical,
-            roles: ["admin", "doctor", "nurse"],
+            roles: ["admin", "nurse"],
         },
         {
             title: "Pharmacy",

@@ -30,12 +30,12 @@ class Invoice extends Model
     public function doctors()
     {
         return $this->belongsToMany(Doctor::class, 'doctor_invoices')
-                    ->withPivot('clinic_id', 'daily_patient_index');
+                    ->withPivot('id','clinic_id', 'daily_patient_index','status');
     }
 
     public function services()
     {
         return $this->belongsToMany(Service::class, 'service_invoices')
-                    ->withPivot('daily_patient_index');
+                    ->withPivot('id','daily_patient_index','status');
     }
 }

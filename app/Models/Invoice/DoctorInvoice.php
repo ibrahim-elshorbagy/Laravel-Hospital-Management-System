@@ -16,4 +16,6 @@ class DoctorInvoice extends Model
     {
         return $this->belongsTo(Clinic::class);
     }
+
+
 }

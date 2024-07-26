@@ -18,7 +18,8 @@ class Service extends Model
     }
     public function invoices()
     {
-        return $this->belongsToMany(Invoice::class, 'service_invoice');
+        return $this->belongsToMany(Invoice::class, 'service_invoices')
+                    ->withPivot('id','daily_patient_index','status');
     }
 }
 
