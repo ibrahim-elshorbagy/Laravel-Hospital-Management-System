@@ -8,6 +8,7 @@ use App\Http\Controllers\Hospital\PackageController;
 use App\Http\Controllers\Patient\PatientController;
 use App\Http\Controllers\Hospital\ServiceController;
 use App\Http\Controllers\Invoice\InvoiceCreateController;
+use App\Http\Controllers\Patient\PatientDashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,7 +27,7 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth', 'verified','role:admin']], function () {
 
     Route::resource('clinic',ClinicController::class);
     Route::resource('doctor',DoctorController::class);
@@ -50,7 +51,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
 });
-
+Route::group(['middleware' => ['auth', 'verified','role:patient']], function () {
+    Route::get('/my-ivoice', [PatientDashboardController::class, 'MyInvoice'])->name('my-invoice');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

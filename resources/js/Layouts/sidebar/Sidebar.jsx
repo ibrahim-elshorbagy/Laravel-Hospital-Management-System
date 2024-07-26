@@ -18,6 +18,7 @@ import { MdMedicalServices } from "react-icons/md";
 
 const Sidebar = ({ user }) => {
     const sections = [
+        //receptionist
         {
             title: "Dashboard",
             links: [
@@ -28,12 +29,27 @@ const Sidebar = ({ user }) => {
             roles: ["admin", "manager"],
         },
         {
+            title: "Accounting",
+            links: [
+                {
+                    text: "Invoices",
+                    href: "invoice.index",
+                    icon: FaFileInvoiceDollar,
+                },
+            ],
+            icon: FaFileInvoiceDollar,
+            roles: ["admin", "accountant"],
+        },
+
+        //Admin
+
+        {
             title: "Doctors",
             links: [
                 { text: "All Doctors", href: "doctor.index", icon: FaUserMd },
             ],
             icon: FaUserMd,
-            roles: ["admin", "doctor"],
+            roles: ["admin"],
         },
         {
             title: "Services",
@@ -50,7 +66,7 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaHandHoldingMedical,
-            roles: ["admin", "staff"],
+            roles: ["admin"],
         },
         {
             title: "Patients",
@@ -62,20 +78,24 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaUserInjured,
-            roles: ["admin", "doctor", "staff"],
+            roles: ["admin"],
         },
+
+        //patient
         {
-            title: "Accounting",
+            title: "My Invoices",
             links: [
                 {
-                    text: "Invoices",
-                    href: "invoice.index",
+                    text: "Patients",
+                    href: "my-invoice",
                     icon: FaFileInvoiceDollar,
                 },
             ],
             icon: FaFileInvoiceDollar,
-            roles: ["admin", "accountant"],
+            roles: ["patient"],
         },
+        //doctor
+
         {
             title: "Appointments",
             links: [

@@ -18,28 +18,39 @@ class DatabaseSeeder extends Seeder
 
 
 
-        // $this->call(RolesAndPermissionsSeeder::class);
-        // $this->call(SpecializationsSeeder::class);
-        // $this->call(ServiceSeeder::class);
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(SpecializationsSeeder::class);
+        $this->call(ServiceSeeder::class);
 
-        // $user = User::factory()->create([
-        //     'name' => 'ibrahim',
-        //     'email' => 'a@a.a',
-        //     'password' =>Hash::make('a'),
-        // ]);
-        // $user->assignRole('admin');
 
-        // User::factory()->count(50)->create()->each(function ($user) {
-        //     $user->assignRole('patient');
-        //     Patient::create([
-        //         'user_id' => $user->id,
-        //         'phone' => '01000000000',
-        //         'address' => '123 Street Egypt',
-        //     ]);
-        // });
 
-        $a = User::where('email', 'a@a.a')->first();
-        $a->removeRole('doctor');
-        $a->assignRole('admin');
+
+        User::factory()->count(50)->create()->each(function ($user) {
+            $user->assignRole('patient');
+            Patient::create([
+                'user_id' => $user->id,
+                'phone' => '01000000000',
+                'address' => '123 Street Egypt',
+            ]);
+        });
+
+      $user = User::factory()->create([
+            'name' => 'ibrahim',
+            'email' => 'a@a.a',
+            'password' =>Hash::make('a'),
+        ]);
+        $user->assignRole('admin');
+
+        $user = User::factory()->create([
+            'name' => 'patient',
+            'email' => 'p@a.a',
+            'password' =>Hash::make('a'),
+        ]);
+        $user->assignRole('patient');
+         Patient::create([
+                'user_id' => $user->id,
+                'phone' => '01000000000',
+                'address' => '123 Street Egypt',
+            ]);
     }
 }
