@@ -28,7 +28,7 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::group(['middleware' => ['auth', 'verified','role:receptionist']], function () {
+Route::group(['middleware' => ['auth', 'verified','role:admin']], function () {
 
     Route::resource('clinic',ClinicController::class);
     Route::resource('doctor',DoctorController::class);
@@ -38,16 +38,6 @@ Route::group(['middleware' => ['auth', 'verified','role:receptionist']], functio
 
     Route::resource('invoice',InvoiceController::class);
 
-    Route::get('/invoice-get/clinics', [InvoiceController::class, 'getAllClinics']);
-    Route::get('/clinics/{clinic}/doctors', [InvoiceController::class, 'getDoctorsByClinic']);
-
-    Route::get('/invoice-get/services', [InvoiceController::class, 'getAllServices']);
-    Route::get('/invoice-get/packages', [InvoiceController::class, 'getAllPackages']);
-    Route::get('/invoice-get/patients', [InvoiceController::class, 'getPatient']);
-
-    Route::get('/invoices/{id}/show', [InvoiceController::class, 'ShowInvoice'])->name('invoices.show');
-
-    Route::post('/invoice-create', [InvoiceCreateController::class, 'store'])->name('invoice-create.store');
 
 
 
@@ -65,7 +55,21 @@ Route::group(['middleware' => ['auth', 'verified','role:doctor']], function () {
     Route::post('doc/my-patient', [DoctorDashboardController::class, 'changeStatus'])->name('doc.patient.change-status');
 
 });
+Route::group(['middleware' => ['auth', 'verified','role:receptionist']], function () {
 
+    Route::get('/invoice-get/clinics', [InvoiceController::class, 'getAllClinics']);
+    Route::get('/clinics/{clinic}/doctors', [InvoiceController::class, 'getDoctorsByClinic']);
+
+    Route::get('/invoice-get/services', [InvoiceController::class, 'getAllServices']);
+    Route::get('/invoice-get/packages', [InvoiceController::class, 'getAllPackages']);
+    Route::get('/invoice-get/patients', [InvoiceController::class, 'getPatient']);
+
+    Route::get('/invoices/{id}/show', [InvoiceController::class, 'ShowInvoice'])->name('invoices.show');
+
+    Route::post('/invoice-create', [InvoiceCreateController::class, 'store'])->name('invoice-create.store');
+
+
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

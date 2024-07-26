@@ -22,11 +22,21 @@ const Sidebar = ({ user }) => {
         {
             title: "Dashboard",
             links: [
-                { text: "Home", href: "dashboard", icon: FaTachometerAlt },
-                { text: "Clinics", href: "clinic.index", icon: FaHospital },
+                {
+                    text: "Home",
+                    href: "dashboard",
+                    icon: FaTachometerAlt,
+                    roles: ["admin", "patient", "receptionist", "doctor"],
+                },
+                {
+                    text: "Clinics",
+                    href: "clinic.index",
+                    icon: FaHospital,
+                    roles: ["admin"],
+                },
             ],
             icon: FaTachometerAlt,
-            roles: ["admin", "patient", "receptionist",'doctor'],
+            roles: ["admin", "patient", "receptionist", "doctor"],
         },
         {
             title: "Accounting",
@@ -35,6 +45,7 @@ const Sidebar = ({ user }) => {
                     text: "Invoices",
                     href: "invoice.index",
                     icon: FaFileInvoiceDollar,
+                    roles: ["admin", "receptionist"],
                 },
             ],
             icon: FaFileInvoiceDollar,
@@ -46,7 +57,12 @@ const Sidebar = ({ user }) => {
         {
             title: "Doctors",
             links: [
-                { text: "All Doctors", href: "doctor.index", icon: FaUserMd },
+                {
+                    text: "All Doctors",
+                    href: "doctor.index",
+                    icon: FaUserMd,
+                    roles: ["admin"],
+                },
             ],
             icon: FaUserMd,
             roles: ["admin"],
@@ -58,11 +74,13 @@ const Sidebar = ({ user }) => {
                     text: "Services",
                     href: "service.index",
                     icon: FaHandHoldingMedical,
+                    roles: ["admin"],
                 },
                 {
                     text: "Packages",
                     href: "package.index",
                     icon: MdMedicalServices,
+                    roles: ["admin"],
                 },
             ],
             icon: FaHandHoldingMedical,
@@ -75,6 +93,7 @@ const Sidebar = ({ user }) => {
                     text: "Patients",
                     href: "patient.index",
                     icon: FaUserInjured,
+                    roles: ["admin"],
                 },
             ],
             icon: FaUserInjured,
@@ -89,6 +108,7 @@ const Sidebar = ({ user }) => {
                     text: "my-invoice",
                     href: "my-invoice",
                     icon: FaFileInvoiceDollar,
+                    roles: ["patient"],
                 },
             ],
             icon: FaFileInvoiceDollar,
@@ -102,6 +122,7 @@ const Sidebar = ({ user }) => {
                     text: "My Patients",
                     href: "doc.my-patient",
                     icon: FaUserInjured,
+                    roles: ["doctor"],
                 },
             ],
             icon: FaUserInjured,
@@ -115,6 +136,7 @@ const Sidebar = ({ user }) => {
                     text: "Manage Appointments",
                     href: "dashboard.index",
                     icon: FaCalendarCheck,
+                    roles: ["admin"],
                 },
             ],
             icon: FaCalendarCheck,
@@ -127,6 +149,7 @@ const Sidebar = ({ user }) => {
                     text: "Records",
                     href: "dashboard.index",
                     icon: FaFileMedical,
+                    roles: ["admin", "nurse"],
                 },
             ],
             icon: FaFileMedical,
@@ -135,7 +158,12 @@ const Sidebar = ({ user }) => {
         {
             title: "Pharmacy",
             links: [
-                { text: "Medicines", href: "dashboard.index", icon: FaPills },
+                {
+                    text: "Medicines",
+                    href: "dashboard.index",
+                    icon: FaPills,
+                    roles: ["admin", "pharmacist"],
+                },
             ],
             icon: FaPills,
             roles: ["admin", "pharmacist"],
@@ -143,14 +171,26 @@ const Sidebar = ({ user }) => {
         {
             title: "Laboratory",
             links: [
-                { text: "Tests", href: "dashboard.index", icon: FaMicroscope },
+                {
+                    text: "Tests",
+                    href: "dashboard.index",
+                    icon: FaMicroscope,
+                    roles: ["admin", "lab_technician"],
+                },
             ],
             icon: FaMicroscope,
             roles: ["admin", "lab_technician"],
         },
         {
             title: "Radiology",
-            links: [{ text: "Imaging", href: "dashboard.index", icon: FaXRay }],
+            links: [
+                {
+                    text: "Imaging",
+                    href: "dashboard.index",
+                    icon: FaXRay,
+                    roles: ["admin", "radiologist"],
+                },
+            ],
             icon: FaXRay,
             roles: ["admin", "radiologist"],
         },
@@ -161,6 +201,7 @@ const Sidebar = ({ user }) => {
                     text: "General Settings",
                     href: "dashboard.index",
                     icon: FaCog,
+                    roles: ["admin"],
                 },
             ],
             icon: FaCog,
@@ -168,10 +209,19 @@ const Sidebar = ({ user }) => {
         },
     ];
 
-    // Filter sections based on user roles
-    const filteredSections = sections.filter((section) =>
-        section.roles.some((role) => user.roles.includes(role))
-    );
+    // Filter sections and links based on user roles
+    const filteredSections = sections
+        .map((section) => ({
+            ...section,
+            links: section.links.filter((link) =>
+                link.roles.some((role) => user.roles.includes(role))
+            ),
+        }))
+        .filter(
+            (section) =>
+                section.roles.some((role) => user.roles.includes(role)) &&
+                section.links.length > 0
+        );
 
     return <SidebarDisplay sections={filteredSections} />;
 };
