@@ -9,3 +9,16 @@ export const DOCTOR_STATUS_TEXT_MAP = {
     inactive: "Inactive",
     retired: "Retired",
 };
+export const INVOICE_STATUS_CLASS_MAP = {
+    pending: "bg-yellow-500",
+    entered: "bg-blue-500",
+    completed: "bg-green-500",
+    canceled: "bg-red-500",
+};
+
+export const INVOICE_STATUS_TEXT_MAP = {
+    pending: "Pending",
+    entered: "Entered",
+    completed: "Completed",
+    canceled: "Canceled",
+};

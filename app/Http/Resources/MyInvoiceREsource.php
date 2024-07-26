@@ -28,6 +28,7 @@ class MyInvoiceREsource extends JsonResource
                     'name' => optional($doctor->user)->name,
                     'clinic' => optional($doctor->clinic)->name,
                     'daily_patient_index' => $doctor->pivot->daily_patient_index,
+                    'status' => $doctor->pivot->status
                 ];
             });
         }),
@@ -38,6 +39,8 @@ class MyInvoiceREsource extends JsonResource
                     'name' => $service->name,
                     'price' => $service->price,
                     'daily_patient_index' => $service->pivot->daily_patient_index,
+                    'status' => $service->pivot->status
+
                 ];
             });
         }),

@@ -40,6 +40,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'admin' => Permission::all(),
             'doctor' => ['manage patients', 'manage appointments'],
             'patient' => ['schedule an appointment'],
+            'receptionist' => ['manage appointments', 'manage billing'],
             // 'nurse' => ['manage patients', 'manage appointments'],
             // 'receptionist' => ['manage appointments', 'manage billing'],
             // 'pharmacist' => ['manage inventory'],

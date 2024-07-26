@@ -37,16 +37,16 @@ class DatabaseSeeder extends Seeder
 
         //admin
       $user = User::factory()->create([
-            'name' => 'ibrahim',
+            'name' => 'ibrahim admin',
             'email' => 'a@a.a',
             'password' =>Hash::make('a'),
         ]);
-        $user->assignRole('admin');
+        $user->assignRole('receptionist');
 
         //patient
 
         $user = User::factory()->create([
-            'name' => 'patient',
+            'name' => 'ahmed mohamed',
             'email' => 'p@a.a',
             'password' =>Hash::make('a'),
         ]);
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
 
         //Doctor
         $user = User::factory()->create([
-            'name' => 'dr,ibrahim',
+            'name' => 'dr ibrahim',
             'email' => 'd@a.a',
             'password' =>Hash::make('a'),
         ]);

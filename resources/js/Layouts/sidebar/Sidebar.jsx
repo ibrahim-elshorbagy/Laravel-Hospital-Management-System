@@ -26,7 +26,7 @@ const Sidebar = ({ user }) => {
                 { text: "Clinics", href: "clinic.index", icon: FaHospital },
             ],
             icon: FaTachometerAlt,
-            roles: ["admin", "manager"],
+            roles: ["admin", "manager", "receptionist"],
         },
         {
             title: "Accounting",
@@ -38,7 +38,7 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaFileInvoiceDollar,
-            roles: ["admin", "accountant"],
+            roles: ["admin", "receptionist"],
         },
 
         //Admin
@@ -86,7 +86,7 @@ const Sidebar = ({ user }) => {
             title: "My Invoices",
             links: [
                 {
-                    text: "Patients",
+                    text: "my-invoice",
                     href: "my-invoice",
                     icon: FaFileInvoiceDollar,
                 },
@@ -118,7 +118,7 @@ const Sidebar = ({ user }) => {
                 },
             ],
             icon: FaCalendarCheck,
-            roles: ["admin", "receptionist"],
+            roles: ["admin"],
         },
         {
             title: "Medical Records",
