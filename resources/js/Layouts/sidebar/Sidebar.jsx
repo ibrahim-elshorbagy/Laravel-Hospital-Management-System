@@ -26,7 +26,7 @@ const Sidebar = ({ user }) => {
                 { text: "Clinics", href: "clinic.index", icon: FaHospital },
             ],
             icon: FaTachometerAlt,
-            roles: ["admin", "manager", "receptionist"],
+            roles: ["admin", "patient", "receptionist",'doctor'],
         },
         {
             title: "Accounting",

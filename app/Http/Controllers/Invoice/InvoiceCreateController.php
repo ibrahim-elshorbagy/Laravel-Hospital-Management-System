@@ -23,7 +23,6 @@ class InvoiceCreateController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        // dd($request->all());
         $data = $request->validated();
 
         DB::beginTransaction();
@@ -55,11 +54,16 @@ class InvoiceCreateController extends Controller
             $email = $patient->user->email;
             $password= null;
         }
-
+        $patientId = null;
+        if (isset($data['patient']['id']) && $data['patient']['id']) {
+            $patientId = $data['patient']['id'];
+        } elseif (isset($patient) && $patient->id) {
+            $patientId = $patient->id;
+        }
 
         //First Table Make Ivoice
         $invoiceData = [
-            'patient_id' => $data['patient']['id'] ? $patient->id : null,
+            'patient_id' => $patientId,
             'name' => $data['patient']['name'],
             'invoice_type'=>$data['invoice_type'],
         ];
@@ -114,7 +118,7 @@ class InvoiceCreateController extends Controller
 
 
 
-        return $this->printInvoice($email =null,$password = null,$invoice,$request['invoice_type']);
+        return $this->printInvoice($email ,$password ,$invoice,$request['invoice_type']);
 
     }
 
@@ -192,7 +196,7 @@ class InvoiceCreateController extends Controller
     }
 
     //Print the Inovice
-    public function printInvoice($email,$password,$invoice,$invoice_type)
+    public function printInvoice($email=null,$password=null,$invoice,$invoice_type)
     {
     $invoice = Invoice::with(['details', 'doctors.user', 'services'])->findOrFail($invoice->id);
 

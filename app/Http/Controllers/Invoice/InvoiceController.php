@@ -29,8 +29,8 @@ class InvoiceController extends Controller
             $query->where('name', 'like', '%' . request('name') . '%');
         }
 
-
-        $invoices = $query->orderBy($sortFileds,$sortDirection)->with(['patient'=>function($q){$q->select('id','user_id');},'details'=>function($q){$q->select('id','invoice_id','total_with_tax');}])->paginate(10)->onEachSide(1);
+                                                                                                    // ,'user_id'
+        $invoices = $query->orderBy($sortFileds,$sortDirection)->with(['patient'=>function($q){$q->select('id');},'details'=>function($q){$q->select('id','invoice_id','total_with_tax');}])->paginate(10)->onEachSide(1);
         return inertia('Invoice/Index', [
             'invoices' => IndexInvoiceResource::collection($invoices),
             'queryParams' => request()->query() ?: null,

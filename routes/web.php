@@ -28,7 +28,7 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::group(['middleware' => ['auth', 'verified','role:admin']], function () {
+Route::group(['middleware' => ['auth', 'verified','role:receptionist']], function () {
 
     Route::resource('clinic',ClinicController::class);
     Route::resource('doctor',DoctorController::class);

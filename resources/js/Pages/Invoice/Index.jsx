@@ -100,7 +100,7 @@ export default function Index({
                                                 Inoivce ID
                                             </TableHeading>
                                             <th className="px-3 py-3 min-w-[150px]">
-                                                Patien ID
+                                                Patient ID (if Having Email)
                                             </th>
                                             <TableHeading
                                                 name="name"
