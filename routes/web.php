@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth', 'verified','role:admin']], function () {
     Route::resource('package',PackageController::class);
     Route::resource('patient',PatientController::class);
 
-    Route::resource('invoice',InvoiceController::class);
 
 
 
@@ -53,9 +52,12 @@ Route::group(['middleware' => ['auth', 'verified','role:doctor']], function () {
 
     Route::get('doc/my-patient', [DoctorDashboardController::class, 'MyPatient'])->name('doc.my-patient');
     Route::post('doc/my-patient', [DoctorDashboardController::class, 'changeStatus'])->name('doc.patient.change-status');
+    Route::get('doc/my-patient/{id}/invoice/{invoice_id}', [DoctorDashboardController::class, 'ShowPatient'])->name('doc.patient.show');
+    Route::post('doc/my-patient/diagnosis', [DoctorDashboardController::class, 'StoreDiagnosis'])->name('doc.patient.diagnosis');
 
 });
 Route::group(['middleware' => ['auth', 'verified','role:receptionist']], function () {
+    Route::resource('invoice',InvoiceController::class);
 
     Route::get('/invoice-get/clinics', [InvoiceController::class, 'getAllClinics']);
     Route::get('/clinics/{clinic}/doctors', [InvoiceController::class, 'getDoctorsByClinic']);

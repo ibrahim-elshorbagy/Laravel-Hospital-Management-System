@@ -118,6 +118,8 @@ class InvoiceCreateController extends Controller
 
 
 
+        $email = $email ?? null;
+        $password = $password ?? null;
         return $this->printInvoice($email ,$password ,$invoice,$request['invoice_type']);
 
     }

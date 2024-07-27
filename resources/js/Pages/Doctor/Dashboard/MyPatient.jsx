@@ -1,10 +1,11 @@
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import SelectInput from "@/Components/SelectInput";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
-export default function Index({ auth, patients }) {
+
+export default function Index({ auth, patients, success }) {
     const [message, setMessage] = useState("");
 
     const handleChange = (e, pivot_id) => {
@@ -43,11 +44,12 @@ export default function Index({ auth, patients }) {
         >
             <Head title="Patients" />
             <div className="py-12">
-                {message && (
-                    <div className="p-4 mb-4 text-white bg-green-500 rounded">
-                        {message}
-                    </div>
-                )}
+                {message ||
+                    (success && (
+                        <div className="p-4 mb-4 text-white bg-green-500 rounded">
+                            {message || success}
+                        </div>
+                    ))}
                 <div className="mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -71,16 +73,41 @@ export default function Index({ auth, patients }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {patients.data.map((patient) => (
+                                        {patients.data.map((patient, index) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                                                key={patient.id}
+                                                key={
+                                                    patient.id ||
+                                                    `patient-${index}`
+                                                }
                                             >
                                                 <td className="px-3 py-2">
                                                     {patient.id}
                                                 </td>
                                                 <td className="px-3 py-2">
-                                                    {patient.patient_name}
+                                                    {patient.patient_id ? (
+                                                        <Link
+                                                            href={route(
+                                                                "doc.patient.show",
+                                                                {
+                                                                    id: patient.patient_id,
+                                                                    invoice_id:
+                                                                        patient.invoice_id,
+                                                                }
+                                                            )}
+                                                            className="text-blue-500 dark:text-blue-400 hover:underline"
+                                                        >
+                                                            {
+                                                                patient.patient_name
+                                                            }
+                                                        </Link>
+                                                    ) : (
+                                                        <span className="text-gray-500 dark:text-gray-400">
+                                                            {
+                                                                patient.patient_name
+                                                            }
+                                                        </span>
+                                                    )}
                                                 </td>
                                                 <td className="px-3 py-2">
                                                     {

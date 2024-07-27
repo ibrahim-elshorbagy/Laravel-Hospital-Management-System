@@ -33,9 +33,14 @@ class Doctor extends Model
         return $this->hasMany(DoctorAppointment::class);
     }
 
-   public function invoices()
+    public function invoices()
     {
         return $this->belongsToMany(Invoice::class, 'doctor_invoices')
                     ->withPivot('id','clinic_id', 'daily_patient_index','status');
+    }
+
+    public function diagnostics()
+    {
+        return $this->hasMany(Diagnostic::class);
     }
 }

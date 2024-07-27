@@ -8,7 +8,7 @@ use App\Models\Doctor\Doctor;
 use App\Models\Patient\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Doctor\Diagnostic;
 class Invoice extends Model
 {
     use HasFactory;
@@ -37,5 +37,9 @@ class Invoice extends Model
     {
         return $this->belongsToMany(Service::class, 'service_invoices')
                     ->withPivot('id','daily_patient_index','status');
+    }
+      public function diagnostics()
+    {
+        return $this->hasMany(Diagnostic::class);
     }
 }
