@@ -10,6 +10,8 @@ import DoctorInvoice from "./DoctorInvoice";
 import ServiceInvoice from "./ServiceInvoice";
 import PackageInvoice from "./PackageInvoice";
 import Select from "react-select";
+import Checkbox from "@/Components/Checkbox";
+
 export default function Create({ auth, patients, queryParams = [] }) {
     const { data, setData, post, errors } = useForm({
         selectedServices: [],
@@ -27,6 +29,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
         packages: [],
         account_type: true,
         patient: { id: "", name: "", email: "" },
+        is_paid: false,
     });
 
     const [invoiceType, setInvoiceType] = useState("");
@@ -37,7 +40,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
         setData("patient", { id: "", name: "", email: "" });
 
         setData("account_type", !data.account_type);
-        console.log(manualPatient);
     };
 
     useEffect(() => {
@@ -128,8 +130,8 @@ export default function Create({ auth, patients, queryParams = [] }) {
         post(route("invoice-create.store"));
     };
 
-  const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
 
     const searchFieldChanged = (inputValue) => {
         if (!inputValue) {
@@ -146,7 +148,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
 
                 const formattedOptions = patients.map((patient) => ({
                     value: { id: patient.id, name: patient.name },
-                    label: `${patient.name} #${patient.id}`, //here
+                    label: `${patient.name} #${patient.id}`,
                 }));
 
                 setOptions(formattedOptions);
@@ -180,6 +182,7 @@ export default function Create({ auth, patients, queryParams = [] }) {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                        {JSON.stringify(errors)}
                         <form
                             onSubmit={onSubmit}
                             className="p-6 bg-white shadow dark:bg-gray-800 sm:p-8 sm:rounded-lg"
@@ -225,7 +228,6 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                 </div>
 
                                 {/* Patient */}
-
                                 <div className="grid">
                                     <div className="flex items-center mb-2 space-x-4">
                                         <InputLabel
@@ -425,6 +427,27 @@ export default function Create({ auth, patients, queryParams = [] }) {
                                     <div className="block w-full p-2 mt-1 text-gray-700 bg-gray-100 rounded-md ">
                                         ${data.total_with_tax.toFixed(2)}
                                     </div>
+                                </div>
+
+                                {/* Dark style checkbox for is_paid */}
+                                <div className="mt-4">
+                                    <label className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="is_paid"
+                                            checked={data.is_paid}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "is_paid",
+                                                    e.target.checked ? true : false
+                                                )
+                                            }
+                                            className="w-5 h-5 transition duration-150 ease-in-out bg-gray-700 border-gray-600 form-checkbox text-emerald-600 focus:ring focus:ring-emerald-500 focus:ring-opacity-50"
+                                        />
+                                        <span className="ml-2 text-gray-700 dark:text-gray-200">
+                                            Is Paid
+                                        </span>
+                                    </label>
                                 </div>
                             </div>
                             <div className="mt-6 text-right">

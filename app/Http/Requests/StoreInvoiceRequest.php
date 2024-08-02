@@ -53,7 +53,7 @@ class StoreInvoiceRequest extends FormRequest
             'patient.name' => ['required', 'string'],
             'patient.email' => ['nullable', 'email', 'unique:users,email'],
 
-
+            'is_paid'=>['required','boolean'],
         ];
 
     }

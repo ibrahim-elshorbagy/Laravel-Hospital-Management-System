@@ -66,6 +66,7 @@ class InvoiceCreateController extends Controller
             'patient_id' => $patientId,
             'name' => $data['patient']['name'],
             'invoice_type'=>$data['invoice_type'],
+            'is_paid' => $data['is_paid'],
         ];
         $invoice = Invoice::create($invoiceData);
 

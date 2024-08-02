@@ -84,6 +84,7 @@ export default function Index({
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="overflow-auto">
+                                {JSON.stringify(invoices)}
                                 <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                                     <thead className="text-xs text-gray-700 uppercase border-b-2 border-gray-500 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr className="text-nowrap">
@@ -131,7 +132,9 @@ export default function Index({
                                             >
                                                 Create Date
                                             </TableHeading>
-
+                                            <th className="px-3 py-3 text-center">
+                                                Paid
+                                            </th>
                                             <th className="px-3 py-3 text-center">
                                                 Actions
                                             </th>
@@ -156,6 +159,7 @@ export default function Index({
                                                     }
                                                 ></TextInput>
                                             </th>
+                                            <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3"></th>
                                             <th className="px-3 py-3 text-right"></th>
@@ -183,7 +187,11 @@ export default function Index({
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {invoice.created_at}
                                                 </td>
-
+                                                <td className="px-3 py-2 text-nowrap">
+                                                    {invoice.is_paid
+                                                        ? "Paid"
+                                                        : "UnPaid"}
+                                                </td>
                                                 <td className="px-3 py-2 text-center text-nowrap">
                                                     <Link
                                                         href={route(

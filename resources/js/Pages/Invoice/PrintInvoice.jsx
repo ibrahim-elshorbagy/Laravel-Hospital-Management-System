@@ -130,6 +130,22 @@ export default function PrintInvoice({ invoice_type, invoice, email, password, s
                     {(site || invoice.site) && (
                         <p>Site: {site || invoice.site}</p>
                     )}
+
+                    {/* Is Paid Status */}
+                    <div className="mt-4">
+                        <h2 className="text-lg font-semibold">
+                            Payment Status
+                        </h2>
+                        <p
+                            className={`font-bold ${
+                                invoice.is_paid
+                                    ? "text-green-600"
+                                    : "text-red-600"
+                            }`}
+                        >
+                            {invoice.is_paid ? "Paid" : "Unpaid"}
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

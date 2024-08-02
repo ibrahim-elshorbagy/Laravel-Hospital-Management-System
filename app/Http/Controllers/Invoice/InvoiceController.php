@@ -118,7 +118,6 @@ class InvoiceController extends Controller
     ]);
 
 
-            // dd($invoice->toJson());
 
         return inertia('Invoice/PrintInvoice', [
             'invoice' => $invoice,
